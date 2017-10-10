@@ -1,0 +1,11 @@
+{
+    {"TelePhone":
+        {"Iphone 6":2000},
+        {"Iphone 7":4000},
+        {"Iphone 8":5000},
+        {"Iphone X":8000}},
+    {"TV":
+        {"LG":5000},
+        {"SANSING":8000},
+        {"HaiEr":3000}}
+}
