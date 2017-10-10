@@ -11,7 +11,7 @@ temp = " "
 
 
 if not os.path.exists("locked_file.txt"):
-	f = open(locked_file,"w")
+	f = open("locked_file","w")
 	f.close()
 
 while count < 3:
@@ -31,7 +31,7 @@ while count < 3:
 		if name == user:
 			passwd = getpass.getpass(">>Password:").strip()
 			if passwd == pw:
-				sys.exit("*******WELCOM!******")
+				sys.exit("*******WELCOME!******")
 			else:
 				print("try again~")
 				count += 1
