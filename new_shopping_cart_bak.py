@@ -43,7 +43,7 @@ while True:
     for i in products_list:
         print(id,i[0],i[1])
         id += 1
-    choise = input(">>Input your choise or "q" to exit:).strip()
+    choise = input(">>Input your choise or 'q' to exit:").strip()
     if choise.isdigit():
         choise = int(choise)
         if choise >=1 and choise < id:
