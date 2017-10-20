@@ -1,4 +1,4 @@
-# miniseed数据的除错程序
+# 数据除错程序
 
 # err_file = "D:\Program File(x86)\MATLAB\AH_data\error.txt"
 # indata = "D:\Program File(x86)\MATLAB\AH.201502010514.miniseed"
