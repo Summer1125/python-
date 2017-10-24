@@ -35,15 +35,15 @@
 -	无参数装饰器
 - 	有参装饰器
 - 	装饰器的语法
-	@func(*args,**kwargs)   ###index = func(index)
-	def index():
-	    pass
+		@func(*args,**kwargs)   ###index = func(index)
+		def index():
+			pass
 - 	装饰器的实现方式：闭包函数
-	def timmer(func):
-		def wrapper(*args,**kwargs):
-			res = func(*args,**kwargs)
-  			return res
-		return wrapper
+		def timmer(func):
+			def wrapper(*args,**kwargs):
+				res = func(*args,**kwargs)
+				return res
+			return wrapper
 - 装饰器不能打印原函数的帮助信息，解决办法：
        from functools import wraps
        在定义wrapper（）函数之前添加 @wraps(func)
