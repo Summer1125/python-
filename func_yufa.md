@@ -24,7 +24,7 @@
 
 - **kwargs
 	按照关键字传值，放在位置传值的后面，存储除了输入的位置参数后多余的参数，以字典的形式
-	顺序：def func(x,*args,**kwargs)
+	顺序：          def func(x,*args,**kwargs)
 # 命名空间与作用域
 - 命名空间的查询
 	globals()   locals()
@@ -75,10 +75,10 @@
 	d = {"a:1,"b":2,"c":3}
 	i = iter(d)
 	while True:
-			try:
-				print(next(i))
-			except StopIteration：
-				break
+	    try:
+		print(next(i))
+	        except StopIteration：
+		    break
 
 			
 # 生成器
@@ -86,9 +86,9 @@
 -	生成器是迭代器。print（isinstance(a,Iterator) 返回True。
 -	与return的区别：return只能返回一次，函数就结束了，而yeild能多次返回值。
 -	yield：把函数变成生成器，就是迭代器。
+-	函数暂停以及继续进行下一次运行时的状态由yield保存。
 	
--	生成器的作用：
 # 协程函数
-	就是给yield 生成的迭代器send一个或一些值
+	就是给yield 生成的迭代器send一个或一些值，e.send('aaaa')
 		
 	
