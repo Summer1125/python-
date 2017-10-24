@@ -71,8 +71,8 @@ li=['alex', 'eric', 'rain']
     for i in range(len(li)):
         print(i,end=' ')
 
-    for index,item in enumerate(li):
-        print(index,item)
+    for i in enumerate(li，100):
+        print(i)
 
     for i in li:
         print(i,end=' ')
@@ -105,8 +105,8 @@ li=['alex', 'eric', 'rain']
     for i in range(len(tu)):
         print(i)
 
-    for index,item in enumerate(tu):
-        print(index,item)
+    for iin enumerate(tu，10):
+        print(i)
 # 6、有如下变量，请实现要求的功能
 
 tu = ("alex", [11, 22, {"k1": 'v1', "k2": ["age", "name"], "k3": (11,22,33)}, 44])
