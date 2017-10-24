@@ -32,13 +32,13 @@
 # 函数对象与闭包
 	内部定义的函数，该函数包含对外部作用域而非全局作用域名字的引用
 # 装饰器
-- 	无参装饰器
+-	无参数装饰器
 - 	有参装饰器
 - 	装饰器的语法
-		@func(*args,**kwargs)   ###index = func(index)
-		    def index():
-			pass
-- 装饰器的实现方式：闭包函数
+	@func(*args,**kwargs)   ###index = func(index)
+	def index():
+	    pass
+- 	装饰器的实现方式：闭包函数
 	def timmer(func):
 		def wrapper(*args,**kwargs):
 			res = func(*args,**kwargs)
