@@ -35,8 +35,8 @@
 - 	无参装饰器
 - 	有参装饰器
 - 	装饰器的语法
-		@func(*args,**kwargs)   #index = func(index)
-		def index():
+		@func(*args,**kwargs)   ###index = func(index)
+		    def index():
 			pass
 - 装饰器的实现方式：闭包函数
 	def timmer(func):
