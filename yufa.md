@@ -1,7 +1,4 @@
-
-
-
-集合的增删改查
+# 集合的增删改查
 a.update(b)  将b并到a，a的内容发生变化
 a.clear()
 a.add("FF")		增加一个不存在的元素
@@ -14,7 +11,7 @@ a.issubset(b)	判断a是否是b的子集，返回True或False
 a.issuperset(b)	判断a是否是b的父集
 
 
-字符串的操作（eg.name="aaaexaea"）
+# 字符串的操作（eg.name="aaaexaea"）
 name.capitalize()	首字母大写
 name.casefold()		大写转换成小写
 name.center(50,"*")	
@@ -43,7 +40,7 @@ nama.translate()	字符翻译
 name.replace("a","A",1) 替换一次
 
 
-常用：
+#常用：
 strip
 center
 count
