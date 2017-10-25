@@ -100,6 +100,10 @@
 	
 	******以上为声明式编程********
 # 内置函数
-	
+	abs()	all()	any()	bin()	bool()	bytes()	 callable()	chr()	ord()
+	面向对象：classmethod()	staticmethod()	property()	delattr()	hasattr()	getattr()	setattr()
+	虚数：x=1-2i(或x=complex(1-2j))  实部=x.real  虚部=x.imag
+	数据类型：type()	isinstance()	float()    str()	list()	tuple()	dict()	set()	frozenset()
+	dir()	divmod()	enumerate()		eval()	exec()	filter
 		
 	
