@@ -62,15 +62,6 @@
 # 调用函数area(‘圆形’,圆半径) 返回圆的面积
 # 调用函数area(‘正方形’,边长) 返回正方形的面积
 # 调用函数area(‘长方形’,长，宽) 返回长方形的面积
-  # def area():
-  #     def 计算长方形面积():
-  #         pass
-
-  #     def 计算正方形面积():
-  #         pass
-
-  #     def 计算圆形面积():
-  #         pass
 	def area(*args):
 		def rectangle(l,w):
 			area = l * w
@@ -142,13 +133,10 @@
 	# 根据指令向文件输出日志
 	# 根据指令同时向文件&屏幕输出日志
 	# 以上日志格式如下
-
 	# 2017-10-19 22:07:38 [1] test log db backup 3
 	# 2017-10-19 22:07:40 [2]    user alex login success 
 	# #注意：其中[1],[2]是指自日志方法第几次调用，每调用一次输出一条日志
-
 	# 代码结构如下
-
 	#  def logger(filename,channel='file'):
 	#     """
 	#     日志方法
@@ -157,16 +145,49 @@
 	#     :return:
 	#     """
 	#     ...your code...
-
 	#  #调用
 	#  log_obj = logger(filename="web.log",channel='both')
 	#  log_obj.__next__()
 	#  log_obj.send('user alex login success')
-  import datetime
-  time = datetime.datetime.now()
-  print('%s'%time)
-
-  def logger(filename,channel='file'):
-    log = yield
-    time = datetime.datatime.now()
+	import datetime
+	def logger(filename,channel='file'):
+		count = 1
+		log = yield
+		time = datetime.datetime.now()
+		msg = '%s [%s] %s'%(time,count,log)
+		if channel == 'file':
+			with open(filename,'a') as fp:
+				fp.write(msg)
+		elif channel == 'teminal':
+			print(msg)
+		count += 1
+	log_obj = logger('out.txt',channel='teminal')
+	log_obj.__next__()
+	log_obj.send('user alex login success')
+# 用map来处理字符串列表,把列表中所有人都变成sb,比方alex_sb
+	name=['alex','wupeiqi','yuanhao','nezha']
+	g = map(lambda item:item+'_sb',name)
+	print(list(g))
+# 用filter函数处理数字列表，将列表中所有的偶数筛选出来
+	num = [1,3,5,6,7,8]
+	f = filter(lambda i:i%2==0,num)
+	print(list(f))
+# 如下，每个小字典的name对应股票名字，shares对应多少股，price对应股票的价格
+# 计算购买每支股票的总价
+# 用filter过滤出，单价大于100的股票有哪些
+	portfolio = [
+	    {'name': 'IBM', 'shares': 100, 'price': 91.1},
+	    {'name': 'AAPL', 'shares': 50, 'price': 543.22},
+	    {'name': 'FB', 'shares': 200, 'price': 21.09},
+	    {'name': 'HPQ', 'shares': 35, 'price': 31.75},
+	    {'name': 'YHOO', 'shares': 45, 'price': 16.35},
+	    {'name': 'ACME', 'shares': 75, 'price': 115.65}
+	]
+	g = map(lambda dic:dic['shares']*dic['price'],portfolio)
+	for i in g:
+		print(i)
+	f = filter(lambda dic:dic['price']>100,portfolio)
+	for i in f:
+		print(i['name'])
+ 
 
