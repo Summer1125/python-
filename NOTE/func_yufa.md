@@ -119,4 +119,40 @@
 # filter() 对迭代器中的数基于一个条件过滤
 # from functools import reduce
 	reduce()	本质上就是通过传入一个函数和初始值，不断的对集合中的每个元素进行迭代运算，每次运算的结果都作为第二次运算的参数。
+# 内置函数
+	*abs()	all()	any()	bin()	bool()	bytes()	 callable()	chr()	ord()
+	*面向对象：classmethod()	staticmethod()	property()	delattr()	hasattr()	getattr()	setattr() issunclass()
+	*虚数：x=1-2i(或x=complex(1-2j))  实部=x.real  虚部=x.imag
+	*数据类型：type()	isinstance()	float()    str()	list()	tuple()	dict()	set()	frozenset()
+	*dir()	divmod()	enumerate()		eval()	exec() 	hash()	help()	hex()	id()	input()	iter()	len()
+	*min()	max()	可以传迭代器进去，也可以传入字典来进行比较 max(dic,key=func)
+# 匿名函数
+	f = lambda k:dic[k]
+# 拉链zip()
+	l = [1,2,3]
+	s = 'hel'
+	z = zip(l,s)	得到迭代器
+	for i in z:
+		print(i)
+# map()	给一个迭代器中的每个元素加上一种映射得到一个迭代器m，比如对l中的每个元素求平方 m = map(lambda item:imtem**2,l)
+# filter() 对迭代器中的数基于一个条件过滤
+#from functools import reduce
+	reduce()	本质上就是通过传入一个函数和初始值，不断的对集合中的每个元素进行迭代运算，每次运算的结果都作为第二次运算的参数。
+	
+# 其他
+	oct()十进制转八进制
+	pow(3,2,2)
+	reversed([1,3,5,7])
+	round()
+	slice()
+	vars()
+	__import__()
+	
+# 会用到匿名函数的内置函数
+	max(iter,key=lambda)
+	min(iter,key=lambda)
+	sorted(iter,key=lambda)
+	map(lambda,iter)
+	reduce(lambda,iter)
+	filter(lambda,iter)
 	
