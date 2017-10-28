@@ -114,8 +114,9 @@
 	z = zip(l,s)	得到迭代器
 	for i in z:
 		print(i)
-# map()	给一个迭代器中的每个元素加上一种映射得到一个迭代器m，比如对l中的每个元素求平方 m = map(lambda item:imtem**2,l)
+# map()	
+	给一个迭代器中的每个元素加上一种映射得到一个迭代器m，比如对l中的每个元素求平方 m = map(lambda item:imtem**2,l)
 # filter() 对迭代器中的数基于一个条件过滤
-#from functools import reduce
+# from functools import reduce
 	reduce()	本质上就是通过传入一个函数和初始值，不断的对集合中的每个元素进行迭代运算，每次运算的结果都作为第二次运算的参数。
 	
