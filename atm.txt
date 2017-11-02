@@ -1,0 +1,4 @@
+{'user':'jack','password': 'a111','account':6545656151561111,'balance':1000,'debt':0}
+{'user':'rose','password':'a222','account':6545656151561112,'balance':1000,'debt':0}
+{'user':'sheldon','password':'a333','account':6545656151561113,'balance':1000,'debt':0}
+{'user':'penny','password':'a444','account':6545656151561114,'balance':0,'debt':2000}
