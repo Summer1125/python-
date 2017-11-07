@@ -1,1 +1,26 @@
 
+# 面向对象
+	定义类
+	class Garen:
+		camp=‘demacia’
+		def __init__(self,nickname):
+			self.nick=nickname
+		def attack(self,enemy):
+			print(“%s attack %s”%(self.nick,enemy))
+# 类：
+  实例化：    g = Garen()
+  引用类的变量： print(Garen.camp)
+  引用类的函数： Garen.attack(1321414)    需要传一个参数进去
+# 使用一个对象：
+  g1 = Geren()
+  print(g1.camp)
+  g2 = Geren()
+  引用名字：对象名.变量名
+  引用绑定方法：对象名.绑定方法
+# 可以对类和对象的变量进行增删改查！！！
+  查：print(Geren.camp)
+  删：del Geren.camp
+  增：Geren.x = 1
+  改：Geren.camp = 'aaa'
+
+  对象g1有同样的使用方法。
