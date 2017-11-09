@@ -63,3 +63,14 @@
 	print(g.script)
 	
 # 组合
+# 接口与归一化设计
+	python中没有接口，用继承的关系来解决，有接口是为了让使用者有统一的用法
+# 主动抛出异常
+	raise Attributeerror('..........')
+# 抽象类
+	import abc
+	class Animal(metaclass=abc.ABCMeta):
+	@abc.abstractmethod
+	def run(self):
+		pass
+	与普通类额外的特点：加了装饰器的函数，子类必须实现它们
