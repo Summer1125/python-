@@ -24,3 +24,42 @@
   改：Geren.camp = 'aaa'
 
   对象g1有同样的使用方法。
+ 
+# 查看类的命名空间
+	print(Geren.__dict__)
+# 查看对象的命名空间
+	print(g1.__dict__)
+
+# 类的变量通常定义成不可变类型
+
+# 继承和派生
+	class A:pass
+	class B:pass
+	class C(A):pass
+	class D(A,B):pass
+	
+	--查看继承：print(D.__bases__)
+	
+	class Hero:
+		def __init__(self,nickname,life_value):
+			self.nickname = nickname
+			self.life_value	= life_value
+		def attack(self,enemy):
+			print("attack from Hero")
+	class Garen(Hero):
+		def __init__(self,nickname,life_value,script):
+			Hero.__init__(self,nickname,life_value)
+			self.script = script
+		def attack(self,enemy):
+			Hero.attack	(self,enemy)
+			print('attack from garen')
+		camp = "ggggg"
+	class Riven(Hero):
+		camp = 'rrrrr'
+
+	g = Garen('garen',20,'hello world')
+	r = Riven('riven',30)
+	print(g.attack(r))
+	print(g.script)
+	
+# 组合
