@@ -63,6 +63,28 @@
 	print(g.script)
 	
 # 组合
+	对比继承来说也是用来减少代码重用的，组合描述的是一种‘有’的关系。
+	老师有课程，学生有成绩....
+	class Course:
+		def __init__(self,name,price,period):
+			self.name=name
+			self.price=price
+			self.period=period
+	class Teacher:
+		def __init__(self,name,course):
+			self.name=name
+			self.course=course
+	class Student:
+		def __init__(self,name,course):
+			self.name=name
+			self.course=course
+	python=Course("python",100,'3m')
+	t = Teacher('egg',python)
+	s = Student('Ale',python)
+
+	print(s.course.name)
+	print(t.course.period)
+	print(t.course.price)
 # 接口与归一化设计
 	python中没有接口，用继承的关系来解决，有接口是为了让使用者有统一的用法
 # 主动抛出异常
@@ -74,3 +96,8 @@
 	def run(self):
 		pass
 	与普通类额外的特点：加了装饰器的函数，子类必须实现它们
+
+# 新式类的继承原理
+	在查找属性时遵循：广度优先
+	查看继承顺序：print(F.__mro__)
+	mro，算出继承关系的列表。
