@@ -101,3 +101,90 @@
 	在查找属性时遵循：广度优先
 	查看继承顺序：print(F.__mro__)
 	mro，算出继承关系的列表。
+# 新式类的继承原理
+	在查找属性时遵循：广度优先
+	查看继承顺序：print(F.__mro__)
+	mro，算出继承关系的列表。
+# super函数的用法
+	super(自己的类，self).父类的函数名
+	super只能用于新式类
+	
+	class People:
+	def __init__(self,name,age):
+		self.name = name
+		self.age = age
+	def speak(self):
+		pass
+	class Chinese(People):
+		def __init__(self,name,age,language='chinese'):
+			super().__init__(name,age)
+		def speak(self,x):
+			super().speak()
+			print('x')
+				
+	
+	
+# 多态与多态性
+	多态是同一种事物的多种形态。
+	多态性：定义统一的接口，可以传入不同类型的值，但是调用的逻辑都一样，执行的结果却不一样。
+	多态性依赖于：1、继承；
+	class Animal:
+	def run(self):
+		pass
+	def speak(self):
+		pass
+	class People(Animal):
+		def run(self):
+			print('renzaizou')
+
+	class Pig(Animal):
+		def run(self):
+			print("pig is walking")
+	peo1 = People()
+	pig1 = Pig()
+
+	def func(obj):
+		obj.run()
+	func(peo1)
+	func(pig1)
+# 封装
+	class A:
+	__x = 1
+	def __test():
+		print('form A')
+	#print(A.__x)会报错，因为__x变成了_A__x的形式
+	print(A.__dict__)
+	a = A()
+	a.__x也是调不到的
+	__名字，这种语法，只在定义的时候才会有变形的效果，如果类或者对象已经产生了，就不会有变形效果。
+		
+	
+	外部想访问x的值，可以这样：
+	class A:
+	def __init__(self):
+		self.__x=1
+	def tell(self):
+		print(self.__x)
+
+	a = A()
+	a.tell()
+	问题：为什么下面的return不行？？
+	class A
+	__x = 1
+	def __test():
+		print('form A')
+	def tell(self):
+		return __x
+	
+	父类中以__开头函数不会被子类覆盖，例如：
+	class A:
+	def __fa(self):
+		print("from A")
+	def test(self):
+		self.__fa()
+
+	class B(A):
+		def __fa(self):
+			print('from B')
+	b = B()
+	b.test()
