@@ -120,8 +120,7 @@
 			super().__init__(name,age)
 		def speak(self,x):
 			super().speak()
-			print('x')
-				
+			print('x')			
 	
 	
 # 多态与多态性
@@ -209,29 +208,29 @@
     print(c.perimeter)
 
    补充：
-    class People:
-    def __init__(self,name):
-        self.name= name
-    @property
-    def name(self):
-        return self.__Name
+   class People:
+	def __init__(self,name):
+	self.name= name
+	@property
+	def name(self):
+	return self.__Name
 
-    @name.setter
-    def name(self,value):
-        if not isinstance(value,str):
-            raise TypeError("名字必须是字符串")
-        self.__Name = value
+	@name.setter
+	def name(self,value):
+	if not isinstance(value,str):
+		raise TypeError("名字必须是字符串")
+	self.__Name = value
 
-    @name.deleter
-    def name(self):
-        del self.__Name
+	@name.deleter
+	def name(self):
+	del self.__Name
 
-    p = People('swefegf')
-    print(p.name)
-    p.name = 'egg'
+	p = People('swefegf')
+	print(p.name)
+	p.name = 'egg'
 
-    print(p.name)
+	print(p.name)
 
-    del p.name
-    # print(p.name)
+	del p.name
+	# print(p.name)
 
