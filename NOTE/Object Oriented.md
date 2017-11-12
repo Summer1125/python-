@@ -188,3 +188,50 @@
 			print('from B')
 	b = B()
 	b.test()
+# property
+    property是一种特殊的属性，访问它时会执行
+
+    import math
+    class Circle:
+        def __init__(self,radius):
+            self.radius = radius
+
+        @property
+        def area(self):
+            return math.pi*self.radius**2
+
+        @property
+        def perimeter(self):
+            return 2*math.pi*self.radius
+    c = Circle(10)
+    print(c.radius)
+    print(c.area)
+    print(c.perimeter)
+
+   补充：
+    class People:
+    def __init__(self,name):
+        self.name= name
+    @property
+    def name(self):
+        return self.__Name
+
+    @name.setter
+    def name(self,value):
+        if not isinstance(value,str):
+            raise TypeError("名字必须是字符串")
+        self.__Name = value
+
+    @name.deleter
+    def name(self):
+        del self.__Name
+
+    p = People('swefegf')
+    print(p.name)
+    p.name = 'egg'
+
+    print(p.name)
+
+    del p.name
+    # print(p.name)
+
