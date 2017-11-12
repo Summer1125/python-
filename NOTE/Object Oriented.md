@@ -188,7 +188,12 @@
 	b = B()
 	b.test()
 # property
-    property是一种特殊的属性，访问它时会执行
+    property是一种特殊的属性，访问它时会执行一段代码，返回结果。
+    被property装饰的属性会优先于对象的属性被使用。
+    被property装饰的属性，如name，分成三种：
+        #propert（查询）
+        #name.setter（赋值）
+        #name.deleter（删除）
 
     import math
     class Circle:
