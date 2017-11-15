@@ -238,4 +238,31 @@
 
 	del p.name
 	# print(p.name)
+# staticmethod
+    类的工具包
+    但凡是定义在类的内部，并且没有被任何装饰器修饰过的方法，都是绑定方法，有自动传值功能。
+    但凡是定义在类的内部，并且被任何装饰器修饰过的方法，都是解除绑定方法，实际上就是函数，没有自动传值的功能。
+
+
+# classmethod
+    把一个方法绑定给类，类.绑定到类的方法()，会把类本身当作第一个参数自动传给绑定方法
+# __str__
+    定义在类内部，必须返回一个字符串类型；打印由这个类产生的对象时，会触发执行。
+    class People:
+    def __init__(self,name,age):
+        self.name = name
+        self.age = age
+    def __str__(self):
+        msg = '(name:%s,age:%s)'%(self.name,self.age)
+        return msg
+
+    p = People('egg',19)
+    print(p)
+
+
+# 关于staticmethod和classmethod,当不用这两个装饰器的时候，类里面的函数是自动绑定给对象的，也就是说会把对象自动传给函数的第一个参数self，若加上@staticmethod，这个函数就不绑定了，类和对象都能用，当作普通函数来用。加上@classmethod，就会把这个函数自动绑定给类，也就是会把对象自动传给函数的第一个参数cls,这时候即使对象在调用这个函数，传进去的也是对象的类。
+# property，就是搞接口用的，@property可以把函数func()编程变量那样的属性来用，需要return这个值。
+                       @func_setter可以修改这个func()所隐藏的参数，直接用对象.func='xxxx'可以直接修改。
+                        @func_deletter则是删除。
+
 
