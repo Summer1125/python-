@@ -254,5 +254,37 @@
 	* property可以把函数func()编程变量那样的属性来用，需要return这个值。
 	* func_setter可以修改这个func()所隐藏的参数，直接用对象.func='xxxx'可以直接修改。
 	* func_deletter则是删除。
+## 反射
+    通过字符串的形式操作对象的属性。
+    ### hasattr(object,name),返回True或False
+        print(hasattr(p,'name')) <=======相同=======>print('name' in p.__dict__)
+    ### getattr()
+        print(getattr(p,'country')) <=====相同=========>print(p.country)
 
-
+        f = getattr(p,'test')
+        f() <=====相同=========>p.test()
+        print(getattr(p,'xxxxxxx','bucunzai'))
+        -- 在'xxxxxxx'属性不存在时候，在getattr后面再加一句提示，保证程序不会抛出异常，这时候显示的就是后面的’bucunzai‘提示。
+        -- 或者加个判断
+            if hasattr(p,'test'):
+                f = getattr(p,'test')
+                f()
+    ### setattr()
+        setattr(p,'age',12)<=====相同=========>p.age=12
+        print(p.age,p.__dict__)
+    ### delattr()
+        delattr(p,'name')<=====相同=========>del p.name
+    ### 反射当前模块的属性
+        import sys
+        def s1():
+            print('s1')
+        def s2():
+            print('s2')
+        print(__name__)
+        this_module = sys.modules[__name__]#拿到当前模块的对象
+        print(this_module.s1)
+        print(hasattr(this_module,'s1'))#返回True或False
+        print(getattr(this_module,'s2'))#返回一个函数地址，加括号就能运行,与this_module.s1一样，this_module.s1()就可以直接运行
+        f = getattr(this_module,'s2')
+        f()
+   
