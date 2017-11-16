@@ -286,5 +286,10 @@
         print(hasattr(this_module,'s1'))#返回True或False
         print(getattr(this_module,'s2'))#返回一个函数地址，加括号就能运行,与this_module.s1一样，this_module.s1()就可以直接运行
         f = getattr(this_module,'s2')
-        f()
-   
+        f()
+## 反射的应用
+		
+## 通过字符串倒入模块
+	import importlib
+	t = importlib.import_module('time')
+	print(t.time())
