@@ -288,7 +288,28 @@
         f = getattr(this_module,'s2')
 	f()
 ## 反射的应用
-		
+## 反射实现可插拔机制
+    客户端代码(Client.py)：
+    class FtpClient:
+    def __init__(self,addr):
+        print("connecting......")
+        self.addr = addr
+    def put(self):
+        print('putting....')
+    服务端：
+    import Client
+    obj = Client.FtpClient('192.168.1.111')
+    print(obj.addr)
+    if hasattr(obj,'get'):
+        f = getattr(obj,'get')
+        f()
+    else:
+        print('还未实现')
+## attr系列
+    __setattr__()
+    __delattr__()
+    __getatte__()
+## 定制自己的数据类型		
 ## 通过字符串倒入模块
 	import importlib
 	t = importlib.import_module('time')
