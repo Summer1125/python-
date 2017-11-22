@@ -356,7 +356,7 @@
 	import importlib
 	t = importlib.import_module('time')
 	print(t.time())
-## 定制自己的数据类型:__getattr__()在什么时候用到？？？
+## 定制自己的数据类型:'__getattr__()'在什么时候用到？？？
     import time
     class LIST:
         def __init__(self,x):
