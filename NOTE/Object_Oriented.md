@@ -400,5 +400,31 @@
     del f['age'] #调用delitem
     print(f.__dict__)
 ## __slots__()方法：当类中定义了它以后，类所生成的对象的属性只能是slot中包含的，不能识别的，而且对象也不生成自己的__dict__
+	class Foo:
+	    __slots__ = ['x','y','z']
+
+	f = Foo()
+	f.x = 1
+	f.y = 2
+	f.z = 3
+	print(f.x,f.y,f.z)
+	# f.m = 4#会报错
+	print(Foo.__dict__)
+
 
 ## __next__和__iter__实现迭代器协议
+	class Foo:
+	    def __init__(self,start):
+		self.start = start
+	    def __next__(self):
+		if self.start > 10:
+		    raise StopIteration
+		n = self.start
+		self.start += 1
+		return n
+	    def __iter__(self):
+		return self
+
+	f = Foo(0)#f下面有__iter__和__next__方法
+	for i in f:
+	    print(i)
