@@ -356,3 +356,49 @@
 	import importlib
 	t = importlib.import_module('time')
 	print(t.time())
+## 定制自己的数据类型:__getattr__()在什么时候用到？？？
+    import time
+    class LIST:
+        def __init__(self,x):
+            self.l = list(x)
+        @property
+        def mid(self):
+            mid = len(self.l)//2
+            return self.l[mid]
+        def append(self,value):
+            if not isinstance(value,str):
+                print('must be str')
+            self.l.append(value)
+        def __getattr__(self,item):
+            return getattr(self.l,item)
+        def __str__(self):
+            return str(self.l)
+    ll = LIST([1,2,3])
+    print(ll.mid)
+    ll.append(3)
+    print(ll.mid)
+    ll.insert(0,2242354)
+    print(ll)
+## item 系列---->把对象操作属性模拟成字典的形式
+    class Foo:
+        def __init__(self,name):
+            self.name = name
+        def __getitem__(self,item):
+            print("getitem")
+            return self.__dict__[item]
+        def __setitem__(self,key,value):
+            print("setitem")
+            self.__dict__[key] = value
+        def __delitem__(self,key):
+            print("delitem")
+            self.__dict__.pop(key)
+    f = Foo('egg')
+    f['age'] = 18 #调用setitem
+    print(f.__dict__)
+    n = f['name'] #调getitem
+    print(n)
+    del f['age'] #调用delitem
+    print(f.__dict__)
+## __slots__()方法：当类中定义了它以后，类所生成的对象的属性只能是slot中包含的，不能识别的，而且对象也不生成自己的__dict__
+
+## __next__和__iter__实现迭代器协议
