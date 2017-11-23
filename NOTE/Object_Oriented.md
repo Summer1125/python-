@@ -428,3 +428,29 @@
 	f = Foo(0)#f下面有__iter__和__next__方法
 	for i in f:
 	    print(i)
+
+## __next__和__iter__实现迭代器协议
+    class Range:
+    def __init__(self,start,end):
+        self.start = start
+        self.end = end
+    def __iter__(self):
+        return self
+    def __next__(self):
+        num = self.start
+        if num > self.end:
+            raise StopIteration
+        self.start += 1
+        return num
+    r = Range(0,10)
+    for i in r:
+        print(i)
+## __module__():当前操作的对象在哪个模块
+## __class__()：表示当前操作的对象的类是什么
+## __del__()
+    析构方法，此方法一般无需定义。
+## 上下文管理协议
+    ### __enter__()
+    ### __exit__()
+## __call__() 方法
+## 元类：就是类的类，可以用它来控制类的行为
