@@ -410,8 +410,6 @@
 	print(f.x,f.y,f.z)
 	# f.m = 4#会报错
 	print(Foo.__dict__)
-
-
 ## __next__和__iter__实现迭代器协议
 	class Foo:
 	    def __init__(self,start):
@@ -428,29 +426,60 @@
 	f = Foo(0)#f下面有__iter__和__next__方法
 	for i in f:
 	    print(i)
-
-## __next__和__iter__实现迭代器协议
-    class Range:
-    def __init__(self,start,end):
-        self.start = start
-        self.end = end
-    def __iter__(self):
-        return self
-    def __next__(self):
-        num = self.start
-        if num > self.end:
-            raise StopIteration
-        self.start += 1
-        return num
-    r = Range(0,10)
-    for i in r:
-        print(i)
-## __module__():当前操作的对象在哪个模块
-## __class__()：表示当前操作的对象的类是什么
+## __module__:当前操作的对象在哪个模块
+## __class__：表示当前操作的对象的类是什么
 ## __del__()
-    析构方法，此方法一般无需定义。
-## 上下文管理协议
+    析构方法，当对象在内存中被释放时，自动触发执行。此方法一般无需定义。
+## 上下文管理协议，即with语句，为了让一个对象兼容with语句，必须在这个对象的类中声明__enter__()和__exit__()方法。
     ### __enter__()
     ### __exit__()
-## __call__() 方法
-## 元类：就是类的类，可以用它来控制类的行为
+    import time
+    class Open:
+        def __init__(self,pathfile,mode='r',code='utf-8'):
+            self.f = open(pathfile,mode = mode)
+            self.pathfile = pathfile
+            self.mode = mode
+        def __getattr__(self,item):
+            return getattr(self.f,item)
+        def __del__(self):
+            print("----del")
+            self.f.close()
+        def __enter__(self):
+            # print("出现with语句，对象的__enter__被触发，有返回值则赋值给as声明的变量")
+            print('-->enter')
+        def __exit__(self,exc_type,exc_val,exc_tb):
+            # print("with代码块执行完毕之后执行")
+            print('===>exit')
+
+    # fp = Open('a.txt','w')
+    # f1 = fp
+    # del fp
+    # print('=========')
+    with Open('a.txt') as f:
+        print('.....with .. as ..')
+    用途或者说好处：
+    1.使用with语句的目的就是把代码块放入with中执行，with结束后，自动完成清理工作，无须手动干预
+    2.在需要管理一些资源比如文件，网络连接和锁的编程环境中，可以在__exit__中定制自动释放资源的机制，你无须再去关系这个问题，这将大有用处
+## __call__() 方法：对象后面加括号，触发执行。
+    class Foo:
+        def __init__(self):
+            pass
+        def __call__(self,*args,**kwargs):
+            print('__call__')
+    obj = Foo()#执行__init__
+    obj()#对象加括号就能运行，执行__call__
+## 元类：就是类的类，可以用它来控制类的行为.
+    http://www.cnblogs.com/linhaifeng/articles/6204014.html#_label13
+    class Mymeta(type):
+        def __init__(self,class_name,class_bases,class_dic):
+            for key in class_dic:
+                if not callable(class_dic[key]):continue
+                if not class_dic[key].__doc__:
+                    raise TypeError("you need to write doc")
+    class Foo(metaclass = Mymeta):
+        x = 1
+        def run(slef):
+            'nwefgnjerg'
+            print('running')
+    Foo = Mymeta("Foo",(object,),{'x':1,'run':'run'})
+    print(Foo.__dict__)
