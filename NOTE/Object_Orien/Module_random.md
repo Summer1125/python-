@@ -1,4 +1,4 @@
-# radonm模块
+## radonm模块
     >>> random.random()             #0到1之间的浮点数
     >>> random.randint(1,10)        #[1,10]之间的整数
     >>> random.randrange(1,5)       #[1,5)之间的整数
