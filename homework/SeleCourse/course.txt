@@ -1,2 +1,0 @@
-python 3 2 jack
-linux 3 3 amy
