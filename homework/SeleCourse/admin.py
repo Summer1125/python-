@@ -15,9 +15,6 @@ class Teacher:
     def salary(self):
         '''返回老师的课时费'''
         return self.__salary
-    # def setConten(self,Course):
-    #     content = input("输入上课内容：").strip()
-    #     Course.courseContent = content
 class Course:
     def __init__(self,name,time,cost,teacher):
         self.courseName = name

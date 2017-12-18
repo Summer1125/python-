@@ -16,23 +16,44 @@
 # print(a)
 # a["age"] = 20
 # print(a)
-class People:
-    def __init__(self,name):
-        self.name=name
-        self.learn = {}
-xm = People("xiaoming")
-xm.learn["python"] = [2,"sfdfsdf"]
-xm.learn["java"] = [2,"sfdfsdf"]
-print(xm.learn)
+# class People:
+#     def __init__(self,name):
+#         self.name=name
+#         self.learn = {}
+# xm = People("xiaoming")
+# xm.learn["python"] = [2,"sfdfsdf"]
+# xm.learn["java"] = [2,"sfdfsdf"]
+# print(xm.learn)
+#
+#
+#
+# import student
+# xm = student.Student('xiaoming')
+# print(xm)
+#
+#
+# xh = student.Student("xiaohong")
+
+
+# 在进行学生操作的时候，每个选项都保存一次。保存的代码有点问题。
+# pickle 的问题已经测试通过。
+# 选课完成后，文件重写；
+# 上课后文件重写；
+# import os
+# a = os.path.exists("name1.pk")
+# print(a)
+# fp = open("name1.pk",'rb')
+# status = fp.read()
+# print(status)
 
 
 
-import Student
-xm = Student.Student('xiaoming')
-print(xm)
 
 
-在进行学生操作的时候，每个选项都保存一次。保存的代码有点问题。
-pickle 的问题已经测试通过。
-选课完成后，文件重写；
-上课后文件重写；
+
+
+
+
+
+
+
