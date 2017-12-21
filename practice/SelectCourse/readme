@@ -1,1 +1,14 @@
+选课系统运行：python SeleCourse.py     根据提示操作
+登录学生用户名字和密码：name1/111
+
+文件说明：
+    SeleCourse.py   主程序，整个选课系统的流程
+    admin.py        定义了Teacher,Course两个类
+    student.py      定义Student类
+    loggin.py       学生登录，登录信息存放
+
+    user_pwd.txt    学生用户名密码存放文件(目前存了两个)， 格式为:name1 111
+    course.txt      课程信息存放文件，格式为：名称，周期，课时费，授课老师，内容
+    xxx.pk          学生信息存放文件，文件名为学生姓名
+    teacher_xxx.pk  教师信息存放文件，文件名为teacher_教师姓名(目前有Piter,Jack两位老师，分别教python和java)
 
