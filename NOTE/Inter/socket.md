@@ -50,8 +50,8 @@
 
     phone.close()
 # 粘包问题
-  ## 解决粘包问题
-  ### 服务端代码：
+## 解决粘包问题
+### 服务端代码：
   
     import socket,struct,json
     import subprocess
