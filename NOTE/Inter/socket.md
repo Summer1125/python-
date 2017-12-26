@@ -49,3 +49,79 @@
         print(data)
 
     phone.close()
+# 粘包问题
+  ## 解决粘包问题
+  ### 服务端代码：
+    import socket,struct,json
+    import subprocess
+    server=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    server.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1) #就是它，在bind前加
+
+    phone.bind(('127.0.0.1',8080))
+
+    phone.listen(5)
+
+    while True:
+        conn,addr=server.accept()
+        while True:
+            cmd=conn.recv(1024)
+            if not cmd:break
+            print('cmd: %s' %cmd)
+
+            res=subprocess.Popen(cmd.decode('utf-8'),
+                                 shell=True,
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+            err=res.stderr.read()
+            print(err)
+            if err:
+                back_msg=err
+            else:
+                back_msg=res.stdout.read()
+
+            headers={'data_size':len(back_msg)}
+            head_json=json.dumps(headers)
+            head_json_bytes=bytes(head_json,encoding='utf-8')
+
+            conn.send(struct.pack('i',len(head_json_bytes))) #先发报头的长度
+            conn.send(head_json_bytes) #再发报头
+            conn.sendall(back_msg) #最后发真实的内容
+
+        conn.close()
+    server.close()
+  ### 客户端代码
+    #coding:utf-8
+    import socket
+    import json
+    import struct
+    ip_port = ('192.168.1.136',9002)
+    client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    client.connect(ip_port)
+
+    while True:
+        msg = input('>>>:').strip()
+        if not msg:continue
+        client.send(msg.encode('utf-8'))
+
+        #收报头长度
+        header_struct = client.recv(4)
+        header_len = struct.unpack('i',header_struct)[0]
+        #收报头
+        header_bytes = client.recv(header_len)
+        header_json = header_bytes.decode('utf-8')
+
+        header_dic = json.loads(header_json)
+        print(header_dic)
+        #在报头字典里拿到数据长度
+        data_size = header_dic['data_size']
+
+        #最后收数据
+        recv_size = 0
+        recv_data = b''
+        while recv_size < data_size:
+            recv_data += client.recv(1024)
+            recv_size += len(recv_data)
+
+        print(recv_data.decode('gbk'))
+
+    client.close()
