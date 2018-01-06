@@ -11,7 +11,7 @@
     phone.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)        #就是它，在bind前加，解决端口占用的报错
     phone.bind(('127.0.0.1',8080))                   #绑定手机卡
 
-    phone.listen(5)                      #开机  ?5表示可以连接一个客户端
+    phone.listen(5)                      #开机  ?5表示可以连接5个客户端
 
     print('starting....')
     while True: #链接循环
@@ -129,6 +129,7 @@
     client.close()
 # socketserver 实现并发
     以上代码的socket并不能实现一个服务器，多个客户端之间的通信，需要用socketserver模块来实现并发。
-    该模块怎么用的见FTPserver.py和FTPclient.py的服务端和客户端之间的文件上传下载代码。其中客户端可以有很多个与服务端同时通信。
+    该模块怎么用的见FTP_upload_download文件中的FTPserver.py和FTPclient.py的服务端和客户端之间的文件上传下载代码。
+    其中客户端可以有很多个与服务端同时通信。
 # 基于UDP的套接字通信
     http://www.cnblogs.com/linhaifeng/articles/6129246.html#_label14
