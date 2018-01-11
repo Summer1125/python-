@@ -227,4 +227,34 @@
 
         　　pid：进程号。
 # 协程
+特点：由于是单线程，不能再切换；不再有任何锁的概念.
+下面这个例子只是能模拟实现并发，并不能监听程序中的IO操作
+需要借助greenlet库实现，但实现的功能并不多。还有gevent模块。
+    from gevent import monkey
+    monkey.patch_all()
+    import gevent
+    from urllib import request
+    import time
+
+    def f(url):
+        print('GET: %s' % url)
+        resp = request.urlopen(url)
+        data = resp.read()
+        print('%d bytes received from %s.' % (len(data), url))
+
+    start=time.time()
+
+    gevent.joinall([
+            gevent.spawn(f, 'https://itk.org/'),
+            gevent.spawn(f, 'https://www.github.com/'),
+            gevent.spawn(f, 'https://zhihu.com/'),
+    ])
+
+    # f('https://itk.org/')
+    # f('https://www.github.com/')
+    # f('https://zhihu.com/')
+
+    print(time.time()-start)
+
+    总结：还是学好C的MPI吧！！
     
