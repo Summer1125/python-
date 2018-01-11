@@ -101,9 +101,9 @@
                 my_thread = MyThread()
                 my_thread.start()
 # event对象
-    threading库中的Event对象是线程之间简单通讯的工具，例如，A线程需要B线程给一个命令才能继续往下执行。
-    这时候用event.wait()将A线程暂停，B线程执行到需要的时候用xx.set()来修改A线程的阻塞状态，A线程得以继续执行。
-    在 初始情况下,Event对象中的信号标志被设置为假。如果有线程等待一个Event对象, 而这个Event对象的标志为假,那么这个线程将会被一直阻塞直至该标志为  真。一个线程如果将一个Event对象的信号标志设置为真,它将唤醒所有等待这个Event对象的线程。如果一个线程等待一个已经被设置为真的Event对象,那么它将忽略这个事件, 继续执行
+   threading库中的Event对象是线程之间简单通讯的工具，例如，A线程需要B线程给一个命令才能继续往下执行。
+   这时候用event.wait()将A线程暂停，B线程执行到需要的时候用xx.set()来修改A线程的阻塞状态，A线程得以继续执行。
+   在 初始情况下,Event对象中的信号标志被设置为假。如果有线程等待一个Event对象, 而这个Event对象的标志为假,那么这个线程将会被一直阻塞直至该标志为  真。一个线程如果将一个Event对象的信号标志设置为真,它将唤醒所有等待这个Event对象的线程。如果一个线程等待一个已经被设置为真的Event对象,那么它将忽略这个事件, 继续执行
 
     event.isSet()：返回event的状态值；
 
@@ -140,7 +140,7 @@
         if __name__=="__main__":
             main()
 
-    threading.Event的wait方法还接受一个超时参数，默认情况下如果事件一致没有发生，wait方法会一直阻塞下去，而加入这个超时参数之后，如果阻塞时间超过这个参数设定的值之后，wait方法会返回。对应于上面的应用场景，如果Redis服务器一致没有启动，我们希望子线程能够打印一些日志来不断地提醒我们当前没有一个可以连接的Redis服务，我们就可以通过设置这个超时参数来达成这样的目的：
+   threading.Event的wait方法还接受一个超时参数，默认情况下如果事件一致没有发生，wait方法会一直阻塞下去，而加入这个超时参数之后，如果阻塞时间超过这个参数设定的值之后，wait方法会返回。对应于上面的应用场景，如果Redis服务器一致没有启动，我们希望子线程能够打印一些日志来不断地提醒我们当前没有一个可以连接的Redis服务，我们就可以通过设置这个超时参数来达成这样的目的：
 
         def worker(event):
             while not event.is_set():
@@ -150,8 +150,8 @@
             time.sleep(1)
     转自：http://www.cnblogs.com/yuanchenqi/articles/6755717.html#3881625
 # multiprocessing 模块（实现并行）
-    由于GIL的存在，python并不能实现真正意义上的多线程，要想充分利用多核CPU资源，可以通过多开进行的方法。
-    multiprocessing包是Python中的多进程管理包。与threading.Thread类似。
+   由于GIL的存在，python并不能实现真正意义上的多线程，要想充分利用多核CPU资源，可以通过多开进行的方法。
+   multiprocessing包是Python中的多进程管理包。与threading.Thread类似。
 
         # Process类调用
         from multiprocessing import Process
