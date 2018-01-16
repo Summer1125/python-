@@ -255,6 +255,8 @@
     # f('https://zhihu.com/')
 
     print(time.time()-start)
+    
+    总结：学好C的ＭＰＩ是关键！！！
 
 # IO 模型
 ## 阻塞IO模型
@@ -314,5 +316,5 @@
         print(recv_data.decode('utf-8'))
     sock.close()
 
-## 异步IO结：还是学好C的MPI吧！！
+## 异步IO
 
