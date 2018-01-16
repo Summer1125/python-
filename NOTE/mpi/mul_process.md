@@ -256,5 +256,63 @@
 
     print(time.time()-start)
 
-    总结：还是学好C的MPI吧！！
-    
+# IO 模型
+## 阻塞IO模型
+    特点：全程阻塞
+    工作机制：类似于最简单的socket模型，server端在没有收到数据之前，一直在等待，直到拿到client发来的数据。
+              这个过程有两个阶段，一个是waiting阶段，一个是等待操作系统在内核将数据拷贝过来的阶段。
+## 非阻塞IO
+    特点：发送多次系统调用，在waiting 阶段不阻塞，这个阶段server端可以去做别的事情，等做完了，再查看数据
+        有没有到，到的话就阻塞在拷贝数据的阶段，这个阻塞阶段很短。但是数据不是实时接收到的，也就是说可能Server
+        端在做别的事情的时候数据已经到了，并没有第一时间拿到。
+    两个阶段：waiting for data：非阻塞
+                  copy data     :阻塞
+    用到的函数：sock.setblocking(False)    其中sock是套接字对象
+## IO多路复用
+    特点：监听多个连接；实现并发；全程阻塞
+    实现模块：select
+    工作机制：用select.select()来监听server端的套接字sock和连接到server端的client套接字coon,当有一个新的连接进来
+              的时候sock就会变化，这时有一个新的conn被监听，当一个conn与server端说话的时候，conn就会发生变化，这时
+              server端就可以与这一个client端交流了，在交流的过程中，别的client即使发消息也是阻塞的。直到一个client
+              通话结束，然后接收到下一个client的数据，这样实现并发。
+
+### server 端代码
+      import socket
+      import select
+
+      ip_port = ('192.168.1.127',8080)
+      sock = socket.socket()
+      sock.bind(ip_port)
+      sock.listen(5)
+      sock.setblocking(False)
+      socks = [sock,]
+      while True:
+          r,w,e = select.select(socks,[],[],)
+          print('r:',r)
+          for obj in r:
+              if obj == sock:
+                  conn,addr = obj.accept()
+                  socks.append(conn)
+              else:
+                  data = obj.recv(1024)
+                  if not data:break
+                  print("---recvData:%s"%data.decode('utf-8'))
+                  send_data = input('>>>:').strip()
+                  obj.send(send_data.encode('utf-8'))
+### 客户端代码（可以开多个，最多五个）
+    import socket
+
+    ip_port = ('192.168.1.127',8080)
+    sock = socket.socket()
+    sock.connect(ip_port)
+
+    while True:
+        data = input('>>>:').strip()
+        sock.send(data.encode('utf-8'))
+        recv_data = sock.recv(1024)
+        if not data:break
+        print(recv_data.decode('utf-8'))
+    sock.close()
+
+## 异步IO结：还是学好C的MPI吧！！
+
