@@ -6,7 +6,7 @@ def func():
 	return
 ```
 用 func._doc_命令来查看函数的描述信息
-###定义空函数：
+### 定义空函数：
 ```python
 def func():
 	pass
@@ -45,11 +45,13 @@ def index():
 	pass
 ```
 - 	装饰器的实现方式：闭包函数
-		def timmer(func):
-			def wrapper(*args,**kwargs):
-				res = func(*args,**kwargs)
-				return res
-			return wrapper
+```python
+def timmer(func):
+	def wrapper(*args,**kwargs):
+		res = func(*args,**kwargs)
+		return res
+	return wrapper
+```
 - 装饰器不能打印原函数的帮助信息，解决办法：
        from functools import wraps
        在定义wrapper（）函数之前添加 @wraps(func)
