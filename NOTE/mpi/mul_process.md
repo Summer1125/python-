@@ -53,59 +53,59 @@ print('end main process')
     这时候需要给进行操作的代码段加上锁（同步锁），来防止一段内存被多个线程调用。同步锁的使用是在threading
     模块的Lock()函数来实例化一个锁，但是同步锁可能会出现死锁的状况，用的比较多的就是RLock()，递归锁，包含
     同步锁的所有功能又不会死锁。
-	```python
-        import threading
-        import time
+```python
+import threading
+import time
 
-        # mutexA = threading.Lock()
-        # mutexB = threading.Lock()
+# mutexA = threading.Lock()
+# mutexB = threading.Lock()
 
-        Rlock=threading.RLock()
+Rlock=threading.RLock()
 
-        class MyThread(threading.Thread):
+class MyThread(threading.Thread):
 
-            def __init__(self):
-                threading.Thread.__init__(self)
+def __init__(self):
+threading.Thread.__init__(self)
 
-            def run(self):
+def run(self):
 
-                self.fun1()
-                self.fun2()
+self.fun1()
+self.fun2()
 
-            def fun1(self):
+def fun1(self):
 
-                Rlock.acquire()  # 如果锁被占用,则阻塞在这里,等待锁的释放
+Rlock.acquire()  # 如果锁被占用,则阻塞在这里,等待锁的释放
 
-                print ("I am %s , get res: %s---%s" %(self.name, "ResA",time.time()))
+print ("I am %s , get res: %s---%s" %(self.name, "ResA",time.time()))
 
-                Rlock.acquire()  # count=2
-                print ("I am %s , get res: %s---%s" %(self.name, "ResB",time.time()))
-                Rlock.release()   #count-1
+Rlock.acquire()  # count=2
+print ("I am %s , get res: %s---%s" %(self.name, "ResB",time.time()))
+Rlock.release()   #count-1
 
-                Rlock.release()   #count-1 =0
-
-
-            def fun2(self):
-                Rlock.acquire()  # count=1
-                print ("I am %s , get res: %s---%s" %(self.name, "ResB",time.time()))
-                time.sleep(0.2)
-
-                Rlock.acquire()  # count=2
-                print ("I am %s , get res: %s---%s" %(self.name, "ResA",time.time()))
-                Rlock.release()
-
-                Rlock.release()   # count=0
+Rlock.release()   #count-1 =0
 
 
-        if __name__ == "__main__":
+def fun2(self):
+Rlock.acquire()  # count=1
+print ("I am %s , get res: %s---%s" %(self.name, "ResB",time.time()))
+time.sleep(0.2)
 
-            print("start---------------------------%s"%time.time())
+Rlock.acquire()  # count=2
+print ("I am %s , get res: %s---%s" %(self.name, "ResA",time.time()))
+Rlock.release()
 
-            for i in range(0, 10):
+Rlock.release()   # count=0
 
-                my_thread = MyThread()
-                my_thread.start()
-		```
+
+if __name__ == "__main__":
+
+print("start---------------------------%s"%time.time())
+
+for i in range(0, 10):
+
+my_thread = MyThread()
+my_thread.start()
+```
 # event对象
    threading库中的Event对象是线程之间简单通讯的工具，例如，A线程需要B线程给一个命令才能继续往下执行。
    这时候用event.wait()将A线程暂停，B线程执行到需要的时候用xx.set()来修改A线程的阻塞状态，A线程得以继续执行。
