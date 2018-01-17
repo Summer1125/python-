@@ -1,5 +1,5 @@
 # 定义函数
-'''python
+```python
 def func():
 	‘函数的描述信息’
 	函数体
