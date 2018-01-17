@@ -40,7 +40,7 @@ def func():
 - 	有参装饰器
 - 	装饰器的语法
 ```python
-@func(*args,**kwargs)   ###index = func(index)
+@func(*args,**kwargs)           #index = func(index)
 def index():
 	pass
 ```
@@ -66,13 +66,15 @@ def timmer(func):
 		迭代器是一次性的，只能往后取值，不能倒着取
 	
 -	查看可迭代对象与迭代器对象
-		from collections import Iterable,Iterator
-		s = 'hello'
-		l = [1,2,3]
-		t = (1,2,3)
-		d = {'a':1}
-		set1 = {1,2,3,4}
-		f = open('a.txt')
+```python
+from collections import Iterable,Iterator
+s = 'hello'
+l = [1,2,3]
+t = (1,2,3)
+d = {'a':1}
+set1 = {1,2,3,4}
+f = open('a.txt')
+```
 		上面几种类型都有_iter_()方法，都可以迭代。（s._iter_()）
 		有_next_()方法，就是迭代器，上面类型只有ｆ有。
 		print(isinstance(s,Iterable))   查看是否可迭代
@@ -80,13 +82,15 @@ def timmer(func):
 	
 	
 # 捕捉异常
-	d = {"a:1,"b":2,"c":3}
-	i = iter(d)
-	while True:
-	    try:
-		print(next(i))
-	        except StopIteration：
-		    break
+```python
+d = {"a:1,"b":2,"c":3}
+i = iter(d)
+while True:
+    try:
+	print(next(i))
+	except StopIteration：
+	    break
+```
 
 			
 # 生成器
@@ -99,49 +103,44 @@ def timmer(func):
 # 协程函数
 	就是给yield 生成的迭代器send一个或一些值，e.send('aaaa')
 # 列表生成式，可以生成一个列表
-	l = ["egg%s" %i for i in range(100)]
+```python
+l = ["egg%s" %i for i in range(100)]
+```
 # 生成器表达式
 	就是把列表生成式的[]换成()就可做成一个生成器了
-	g = ('egg%s' %i for i in range(100))
-	print(next(g))
+```python
+g = ('egg%s' %i for i in range(100))
+print(next(g))
+```
 	或者用for i in g迭代，就可以依次取里面的值，节省内存。
 	
 	******以上为声明式编程********
 # 内置函数
-	*abs()	all()	any()	bin()	bool()	bytes()	 callable()	chr()	ord()
-	*面向对象：classmethod()	staticmethod()	property()	delattr()	hasattr()	getattr()	setattr() issunclass()
-	*虚数：x=1-2i(或x=complex(1-2j))  实部=x.real  虚部=x.imag
-	*数据类型：type()	isinstance()	float()    str()	list()	tuple()	dict()	set()	frozenset()
-	*dir()	divmod()	enumerate()		eval()	exec() 	hash()	help()	hex()	id()	input()	iter()	len()
-	*min()	max()	可以传迭代器进去，也可以传入字典来进行比较 max(dic,key=func)
+	*abs()	all()	any()	bin()	bool()	bytes()	 callable()	chr()	ord()<br>
+	*面向对象：classmethod()	staticmethod()	property()	delattr()	hasattr()	getattr()	setattr() issunclass()<br>
+	*虚数：x=1-2i(或x=complex(1-2j))  实部=x.real  虚部=x.imag<br>
+	*数据类型：type()	isinstance()	float()    str()	list()	tuple()	dict()	set()	frozenset()<br>
+	*dir()	divmod()	enumerate()		eval()	exec() 	hash()	help()	hex()	id()	input()	iter()	len()<br>
+	*min()	max()	可以传迭代器进去，也可以传入字典来进行比较 max(dic,key=func)<br>
 # 匿名函数
-	f = lambda k:dic[k]
+```python
+f = lambda k:dic[k]
+```
 # 拉链zip()
-	l = [1,2,3]
-	s = 'hel'
-	z = zip(l,s)	得到迭代器
-	for i in z:
-		print(i)
+```python
+l = [1,2,3]
+s = 'hel'
+z = zip(l,s)	#得到迭代器
+for i in z:
+	print(i)
+```
 # map()	
 	给一个迭代器中的每个元素加上一种映射得到一个迭代器m，比如对l中的每个元素求平方 m = map(lambda item:imtem**2,l)
 # filter() 对迭代器中的数基于一个条件过滤
 # from functools import reduce
 	reduce()	本质上就是通过传入一个函数和初始值，不断的对集合中的每个元素进行迭代运算，每次运算的结果都作为第二次运算的参数。
-# 内置函数
-	*abs()	all()	any()	bin()	bool()	bytes()	 callable()	chr()	ord()
-	*面向对象：classmethod()	staticmethod()	property()	delattr()	hasattr()	getattr()	setattr() issunclass()
-	*虚数：x=1-2i(或x=complex(1-2j))  实部=x.real  虚部=x.imag
-	*数据类型：type()	isinstance()	float()    str()	list()	tuple()	dict()	set()	frozenset()
-	*dir()	divmod()	enumerate()		eval()	exec() 	hash()	help()	hex()	id()	input()	iter()	len()
-	*min()	max()	可以传迭代器进去，也可以传入字典来进行比较 max(dic,key=func)
-# 匿名函数
-	f = lambda k:dic[k]
-# 拉链zip()
-	l = [1,2,3]
-	s = 'hel'
-	z = zip(l,s)	得到迭代器
-	for i in z:
-		print(i)
+
+
 # map()	给一个迭代器中的每个元素加上一种映射得到一个迭代器m，比如对l中的每个元素求平方 m = map(lambda item:imtem**2,l)
 # filter() 对迭代器中的数基于一个条件过滤
 #from functools import reduce
