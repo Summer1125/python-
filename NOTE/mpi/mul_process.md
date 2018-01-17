@@ -357,8 +357,85 @@
 
 	同步：阻塞IO，非阻塞IO，IO多路复用
 	异步：异步IO
-# selector 模块
+
+## 套接字对象的本质：文件描述符
+  sock::sock <socket.socket fd=224, 
+  family=AddressFamily.AF_INET, 
+  type=SocketKind.SOCK_STREAM, 
+  proto=0, laddr=('127.0.0.1', 8800)>
+
+
+  对于文件描述符（套接字对象）：
+  1 是一个非零整数，不会变
+  2 收发数据的时候，对于接收端而言，数据先到内核空间，然后copy到用户空间，同时，内核空间数据清除。
+
+
+## 实现IO多路复用,不同的平台有不同的机制：
+  windows: select
+  linux: select,poll,epoll
+  其中最简单的机制就是select，最好的是epoll,poll算是两者之间的过渡，基本不用。
+
+
+  select的缺陷：
+  1、每次调用select都要将所有的fd(文件描述符)拷贝到内核空间，导致效率下降。
+  2、在找出哪一个fd变化时，用的是最基本的遍历的方式，来遍历查看每个fd是否有数据访问；(这一点很重要)
+  3、监听的套接字对象个数有限制，最大是1024
+  poll:
+  在select上面做的改进就是最大连接数没有限制了
+  epoll:
+  里面设置了三个函数来改进。
+  1、第一个函数：创建epoll句柄：将所有的fd(文件描述符)拷贝到内核空间，但是只拷贝一次。
+  2、回调函数：某一个函数或者某一个动作成功完成之后就会自动触发的函数。
+     为所有的fd绑定一个回调函数，一旦有数据访问则触发该回调函数，回调函数将fd放到链表中；
+
+
+  对比select和epoll：
+  举个例子，考试交卷，select相当于监考老师挨个问考生“你要不要交卷？”，这样挨个问下来，如果有
+  的话就把卷子拿走（卷子相当于数据）。epoll则是在每个考生那里装了一个按钮，谁做完了就自己按下，
+  监考老师就知道你要交卷子，过去把卷子拿走，效率就提高了。
+# selectors 模块
 ## 是在select模块基础上的封装，建议使用这个来实现IO多路复用！！！！！上面的select知道什么原理就行，面试用的。
+  --会根据平台自动选择IO多路复用的机制，在window下面就是select，在linux就是epoll。
+
+  代码展示怎么用selector模块，其中client端不变！！！
+  server端代码：
+    import selectors
+    import socket
+
+    ip_port = ('192.168.1.127',8800)
+    sock = socket.socket()
+    sock.bind(ip_port)
+    sock.listen(5)
+
+    sock.setblocking(False)
+
+    sel = selectors.DefaultSelector()   #根据平台选择最佳的IO多路复用机制，例如在linux选择epoll
+
+    def read(conn,mask):
+        try:
+            data = conn.recv(1024)
+            print('recvData:',data.decode('utf-8'))
+            send_data = input('>>>:').strip()
+            conn.send(send_data.encode('utf-8'))
+        except Exception:
+            sel.unregister(conn)
+
+    def accept(sock,mask):
+        conn,addr = sock.accept()
+        print("---conn:",conn)
+        sel.register(conn,selectors.EVENT_READ,read)  # 注册事件
+
+    sel.register(sock,selectors.EVENT_READ,accept)   # 注册事件
+
+
+    print('waiting....')
+    while True:
+        events = sel.select()
+        for key,mask in events:
+            func = key.data    #accept、read函数
+            obj = key.fileobj  #conn
+            func(obj,mask)
+
 
 
 
