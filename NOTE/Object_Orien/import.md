@@ -1,6 +1,6 @@
 参考 ：http://www.cnblogs.com/guotianbao/p/6822174.html
 # 模块与包
-   ## 模块
+## 模块
     模块分三类：内置模块，第三方模块，自定义模块
     包是从文件夹的级别阻止模块
  ```python
@@ -12,17 +12,17 @@
         2，创建名称空间
         3，创建模块名指向该文件的名称空间
             module.name的方式使用（模块名.名字）
-    
-    import spam
+ ```python
+  import spam
     spam.name
-    
-    
+ ```
+ ```python
     from spam import name
     name
+ ```
     
     
-    
-   ## 包的导入
+## 包的导入
      包是一通过使用‘.模块名’的方式来组织模块名称空间
      无论是import 还是from..import形式，凡是在导入语句中（而不是使用时）遇到带点的，都要第一时间提高警觉，这是关于包才有的导入语法。
      ！！！点的左边必须是包
