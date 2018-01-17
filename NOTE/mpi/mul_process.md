@@ -25,28 +25,28 @@
 import threading
 import time
 def music():
-print('start music')
-time.sleep(3)
-print('end music')
+	print('start music')
+	time.sleep(3)
+	print('end music')
 
 def log():
-print('start log')
-time.sleep(5)
-print('end log')
+	print('start log')
+	time.sleep(5)
+	print('end log')
 
 if __name__ == "__main__":
-t1 = threading.Thread(target=music,name = 'music')
-t2 = threading.Thread(target=log,name='log')
+	t1 = threading.Thread(target=music,name = 'music')
+	t2 = threading.Thread(target=log,name='log')
 
-t2.setDaemon(True)
+	t2.setDaemon(True)
 
-t1.start()
-t2.start()
+	t1.start()
+	t2.start()
 
 
-#t1.join()
+	#t1.join()
 
-print('end main process')
+	print('end main process')
 ```
 # RLock()的使用
     在python多线程中，会存在线程A还没操作完一个变量，线程B就开始的情况。属于多个线程同时操作一段内存，
@@ -65,46 +65,46 @@ Rlock=threading.RLock()
 class MyThread(threading.Thread):
 
 def __init__(self):
-threading.Thread.__init__(self)
+	threading.Thread.__init__(self)
 
 def run(self):
 
-self.fun1()
-self.fun2()
+	self.fun1()
+	self.fun2()
 
 def fun1(self):
 
-Rlock.acquire()  # 如果锁被占用,则阻塞在这里,等待锁的释放
+	Rlock.acquire()  # 如果锁被占用,则阻塞在这里,等待锁的释放
 
-print ("I am %s , get res: %s---%s" %(self.name, "ResA",time.time()))
+	print ("I am %s , get res: %s---%s" %(self.name, "ResA",time.time()))
 
-Rlock.acquire()  # count=2
-print ("I am %s , get res: %s---%s" %(self.name, "ResB",time.time()))
-Rlock.release()   #count-1
+	Rlock.acquire()  # count=2
+	print ("I am %s , get res: %s---%s" %(self.name, "ResB",time.time()))
+	Rlock.release()   #count-1
 
-Rlock.release()   #count-1 =0
+	Rlock.release()   #count-1 =0
 
 
 def fun2(self):
-Rlock.acquire()  # count=1
-print ("I am %s , get res: %s---%s" %(self.name, "ResB",time.time()))
-time.sleep(0.2)
+	Rlock.acquire()  # count=1
+	print ("I am %s , get res: %s---%s" %(self.name, "ResB",time.time()))
+	time.sleep(0.2)
 
-Rlock.acquire()  # count=2
-print ("I am %s , get res: %s---%s" %(self.name, "ResA",time.time()))
-Rlock.release()
+	Rlock.acquire()  # count=2
+	print ("I am %s , get res: %s---%s" %(self.name, "ResA",time.time()))
+	Rlock.release()
 
-Rlock.release()   # count=0
+	Rlock.release()   # count=0
 
 
 if __name__ == "__main__":
 
-print("start---------------------------%s"%time.time())
+	print("start---------------------------%s"%time.time())
 
-for i in range(0, 10):
+	for i in range(0, 10):
 
-my_thread = MyThread()
-my_thread.start()
+	my_thread = MyThread()
+	my_thread.start()
 ```
 # event对象
    threading库中的Event对象是线程之间简单通讯的工具，例如，A线程需要B线程给一个命令才能继续往下执行。
@@ -150,11 +150,11 @@ if __name__=="__main__":
 
 ```python
 def worker(event):
-while not event.is_set():
-logging.debug('Waiting for redis ready...')
-event.wait(2)
-logging.debug('redis ready, and connect to redis server and do some work [%s]', time.ctime())
-time.sleep(1)
+	while not event.is_set():
+	logging.debug('Waiting for redis ready...')
+	event.wait(2)
+	logging.debug('redis ready, and connect to redis server and do some work [%s]', time.ctime())
+	time.sleep(1)
 ```
     转自：http://www.cnblogs.com/yuanchenqi/articles/6755717.html#3881625
 # multiprocessing 模块（实现并行）
@@ -166,46 +166,45 @@ time.sleep(1)
 from multiprocessing import Process
 import time
 def f(name):
-
-print('hello', name,time.ctime())
-time.sleep(1)
+	print('hello', name,time.ctime())
+	time.sleep(1)
 
 if __name__ == '__main__':
-p_list=[]
-for i in range(3):
-p = Process(target=f, args=('alvin:%s'%i,))
-p_list.append(p)
-p.start()
-for i in p_list:
-p.join()
-print('end')
+	p_list=[]
+	for i in range(3):
+	p = Process(target=f, args=('alvin:%s'%i,))
+	p_list.append(p)
+	p.start()
+	for i in p_list:
+	p.join()
+	print('end')
 
 # 继承Process类调用
 from multiprocessing import Process
 import time
 
 class MyProcess(Process):
-def __init__(self):
-super(MyProcess, self).__init__()
-# self.name = name
+	def __init__(self):
+		super(MyProcess, self).__init__()
+		# self.name = name
 
-def run(self):
+	def run(self):
 
-print ('hello', self.name,time.ctime())
-time.sleep(1)
+		print ('hello', self.name,time.ctime())
+		time.sleep(1)
 
 
 if __name__ == '__main__':
-p_list=[]
-for i in range(3):
-p = MyProcess()
-p.start()
-p_list.append(p)
+	p_list=[]
+	for i in range(3):
+	p = MyProcess()
+	p.start()
+	p_list.append(p)
 
-for p in p_list:
-p.join()
+	for p in p_list:
+	p.join()
 
-print('end')
+	print('end')
 ```
    ## process类
         构造方法：
@@ -248,10 +247,10 @@ from urllib import request
 import time
 
 def f(url):
-print('GET: %s' % url)
-resp = request.urlopen(url)
-data = resp.read()
-print('%d bytes received from %s.' % (len(data), url))
+	print('GET: %s' % url)
+	resp = request.urlopen(url)
+	data = resp.read()
+	print('%d bytes received from %s.' % (len(data), url))
 
 start=time.time()
 
