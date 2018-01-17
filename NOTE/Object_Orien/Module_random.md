@@ -11,14 +11,16 @@
         print(item)                 #将item打乱顺序
 
 ## 随机生成5个含有数字和字母的验证码
-    def validate():
-        s = ''
-        for i in range(5):
-            num = random.randint(0,9)
-            upper_alph = chr(random.randint(65,90))
-            lower_alph = chr(random.randint(97,122))
+```python
+def validate():
+    s = ''
+    for i in range(5):
+        num = random.randint(0,9)
+        upper_alph = chr(random.randint(65,90))
+        lower_alph = chr(random.randint(97,122))
 
-            ret = random.choice([str(num),upper_alph,lower_alph])
-            s += ret
-        return s
-    print(validate())
+        ret = random.choice([str(num),upper_alph,lower_alph])
+        s += ret
+    return s
+print(validate())
+```
