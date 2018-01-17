@@ -2,20 +2,24 @@
 # 面向对象
 
 ## 定义类
+```python
 	class Garen:
 		camp=‘demacia’
 		def __init__(self,nickname):
 			self.nick=nickname
 		def attack(self,enemy):
 			print(“%s attack %s”%(self.nick,enemy))
+```
 ## 类：
   * 实例化：    g = Garen()
   * 引用类的变量： print(Garen.camp)
   * 引用类的函数： Garen.attack(1321414)    需要传一个参数进去
 ## 使用一个对象：
+```python
   g1 = Geren()
   print(g1.camp)
   g2 = Geren()
+```python
   * 引用名字：对象名.变量名
   * 引用绑定方法：对象名.绑定方法
 ## 可以对类和对象的变量进行增删改查！！！
@@ -34,13 +38,14 @@
 ## 类的变量通常定义成不可变类型
 
 ## 继承和派生
+```python
 	class A:pass
 	class B:pass
 	class C(A):pass
 	class D(A,B):pass
-	
+```
 	-- 查看继承：print(D.__bases__)
-	
+```python	
 	class Hero:
 		def __init__(self,nickname,life_value):
 			self.nickname = nickname
@@ -62,12 +67,13 @@
 	r = Riven('riven',30)
 	print(g.attack(r))
 	print(g.script)
-	
+```
 ## 组合
 	* 对比继承来说也是用来减少代码重用的，组合描述的是一种‘有’的关系。
 	* 老师有课程，学生有成绩....
-	class Course:
-		def __init__(self,name,price,period):
+```python
+class Course:
+	def __init__(self,name,price,period):
 			self.name=name
 			self.price=price
 			self.period=period
@@ -86,18 +92,22 @@
 	print(s.course.name)
 	print(t.course.period)
 	print(t.course.price)
+```
 ## 接口与归一化设计
 	python中没有接口，用继承的关系来解决，有接口是为了让使用者有统一的用法
 ## 主动抛出异常
+```python
 	raise Attributeerror('..........')
+```
 ## 抽象类
-	import abc
+```python
+import abc
 	class Animal(metaclass=abc.ABCMeta):
 	@abc.abstractmethod
 	def run(self):
 		pass
-	与普通类额外的特点：加了装饰器的函数，子类必须实现它们
-
+	#与普通类额外的特点：加了装饰器的函数，子类必须实现它们
+```
 ## 新式类的继承原理
 	* 在查找属性时遵循：广度优先
 	* 查看继承顺序：print(F.__mro__)
@@ -105,7 +115,8 @@
 ## super函数的用法
 	* super(自己的类，self).父类的函数名
 	* super只能用于新式类
-	
+
+```python
 	class People:
 	def __init__(self,name,age):
 		self.name = name
@@ -120,11 +131,13 @@
 			print('x')			
 	
 	
+```
 ## 多态与多态性
 	* 多态是同一种事物的多种形态。
 	* 多态性：定义统一的接口，可以传入不同类型的值，但是调用的逻辑都一样，执行的结果却不一样。
 	* 多态性依赖于：继承；
-	class Animal:
+```python
+class Animal:
 	def run(self):
 		pass
 	def speak(self):
@@ -143,14 +156,17 @@
 		obj.run()
 	func(peo1)
 	func(pig1)
+```
 ## 封装
-	class A:
+```python	
+class A:
 	__x = 1
 	def __test():
 		print('form A')
 	#print(A.__x)会报错，因为__x变成了_A__x的形式
 	print(A.__dict__)
 	a = A()
+```
 	a.__x也是调不到的
 	__名字，这种语法，只在定义的时候才会有变形的效果，如果类或者对象已经产生了，就不会有变形效果。
 		
