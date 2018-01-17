@@ -287,16 +287,16 @@
       sock.bind(ip_port)
       sock.listen(5)
       sock.setblocking(False)
-      socks = [sock,]
-      while True:
-          r,w,e = select.select(socks,[],[],)
-          print('r:',r)
+      socks = [sock,]　　　　　　　＃初始化监听列表
+      while True:
+          r,w,e = select.select(socks,[],[],)　　＃开始监听
+          print('r:',r)
           for obj in r:
-              if obj == sock:
-                  conn,addr = obj.accept()
-                  socks.append(conn)
-              else:
-                  data = obj.recv(1024)
+              if obj == sock:　　　＃如果是有新的client连接进来，server端的套接字对象会变化
+              　　conn,addr = obj.accept()
+                  socks.append(conn) #将新连接进来的client套接字放到监听列表
+              else:   #如果有消息发动过来，对应的那个client的套接字对象会变化，开始通信
+                  data = obj.recv(1024)
                   if not data:break
                   print("---recvData:%s"%data.decode('utf-8'))
                   send_data = input('>>>:').strip()
@@ -315,6 +315,35 @@
         if not data:break
         print(recv_data.decode('utf-8'))
     sock.close()
+### 以上代码存在的问题
+  当开了多个客户端的时候，其中有一个client关闭，server端就会报错，是因为在windows系统能下需要捕捉异常，
+  在捕捉到异常之后，就把这个已经关闭的client的socket对象在监听列表中删除。
+  在linux则认为发了一个空信号过来，因此需要加一个是否为空的判断。所以在server端的代码改成：
+    import socket
+    import select
+
+    ip_port = ('192.168.1.127',8080)
+    sock = socket.socket()
+    sock.bind(ip_port)
+    sock.listen(5)
+    sock.setblocking(False)
+    socks = [sock,]
+    while True:
+        r,w,e = select.select(socks,[],[],)
+        print('r:',r)
+        for obj in r:
+            if obj == sock:
+                conn,addr = obj.accept()
+                socks.append(conn)
+            else:
+                try:
+                    data = obj.recv(1024)
+                    print("---recvData:%s"%data.decode('utf-8'))
+                    send_data = input('>>>:').strip()
+                    obj.send(send_data.encode('utf-8'))
+                except Exception:
+                    socks.remove(obj)
+            # 在linux下用if not data：continue来处理
 
 ## 异步IO
     特点：全程无阻塞
@@ -328,5 +357,8 @@
 
 	同步：阻塞IO，非阻塞IO，IO多路复用
 	异步：异步IO
+# selector 模块
+## 是在select模块基础上的封装，建议使用这个来实现IO多路复用！！！！！上面的select知道什么原理就行，面试用的。
+
 
 
