@@ -21,33 +21,33 @@
     t.setDaemon(True):线程对象t是主线程的协程，主线程执行完了，t即使没有执行完也结束。
 
 ## 例子：
-    ```python
-    import threading
-    import time
-    def music():
-        print('start music')
-        time.sleep(3)
-        print('end music')
+```python
+import threading
+import time
+def music():
+print('start music')
+time.sleep(3)
+print('end music')
 
-    def log():
-        print('start log')
-        time.sleep(5)
-        print('end log')
+def log():
+print('start log')
+time.sleep(5)
+print('end log')
 
-    if __name__ == "__main__":
-        t1 = threading.Thread(target=music,name = 'music')
-        t2 = threading.Thread(target=log,name='log')
+if __name__ == "__main__":
+t1 = threading.Thread(target=music,name = 'music')
+t2 = threading.Thread(target=log,name='log')
 
-        t2.setDaemon(True)
+t2.setDaemon(True)
 
-        t1.start()
-        t2.start()
-        
+t1.start()
+t2.start()
 
-        #t1.join()
 
-    print('end main process')
-    ```
+#t1.join()
+
+print('end main process')
+```
 # RLock()的使用
     在python多线程中，会存在线程A还没操作完一个变量，线程B就开始的情况。属于多个线程同时操作一段内存，
     这时候需要给进行操作的代码段加上锁（同步锁），来防止一段内存被多个线程调用。同步锁的使用是在threading
@@ -118,95 +118,95 @@
     event.set()： 设置event的状态值为True，所有阻塞池的线程激活进入就绪状态， 等待操作系统调度；
 
     event.clear()：恢复event的状态值为False
-		```python
-        import threading
-        import time
-        import logging
+```python
+import threading
+import time
+import logging
 
-        logging.basicConfig(level=logging.DEBUG, format='(%(threadName)-10s) %(message)s',)
+logging.basicConfig(level=logging.DEBUG, format='(%(threadName)-10s) %(message)s',)
 
-        def worker(event):
-            logging.debug('Waiting for redis ready...')
-            event.wait()
-            logging.debug('redis ready, and connect to redis server and do some work [%s]', time.ctime())
-            time.sleep(1)
+def worker(event):
+    logging.debug('Waiting for redis ready...')
+    event.wait()
+    logging.debug('redis ready, and connect to redis server and do some work [%s]', time.ctime())
+    time.sleep(1)
 
-        def main():
-            readis_ready = threading.Event()
-            t1 = threading.Thread(target=worker, args=(readis_ready,), name='t1')
-            t1.start()
+def main():
+    readis_ready = threading.Event()
+    t1 = threading.Thread(target=worker, args=(readis_ready,), name='t1')
+    t1.start()
 
-            t2 = threading.Thread(target=worker, args=(readis_ready,), name='t2')
-            t2.start()
+    t2 = threading.Thread(target=worker, args=(readis_ready,), name='t2')
+    t2.start()
 
-            logging.debug('first of all, check redis server, make sure it is OK, and then trigger the redis ready event')
-            time.sleep(3) # simulate the check progress
-            readis_ready.set()
+    logging.debug('first of all, check redis server, make sure it is OK, and then trigger the redis ready event')
+    time.sleep(3) # simulate the check progress
+    readis_ready.set()
 
-        if __name__=="__main__":
-            main()
-		```
+if __name__=="__main__":
+    main()
+```
    threading.Event的wait方法还接受一个超时参数，默认情况下如果事件一致没有发生，wait方法会一直阻塞下去，而加入这个超时参数之后，如果阻塞时间超过这个参数设定的值之后，wait方法会返回。对应于上面的应用场景，如果Redis服务器一致没有启动，我们希望子线程能够打印一些日志来不断地提醒我们当前没有一个可以连接的Redis服务，我们就可以通过设置这个超时参数来达成这样的目的：
 
-		```python
-        def worker(event):
-            while not event.is_set():
-                logging.debug('Waiting for redis ready...')
-                event.wait(2)
-            logging.debug('redis ready, and connect to redis server and do some work [%s]', time.ctime())
-            time.sleep(1)
-		```
+```python
+def worker(event):
+while not event.is_set():
+logging.debug('Waiting for redis ready...')
+event.wait(2)
+logging.debug('redis ready, and connect to redis server and do some work [%s]', time.ctime())
+time.sleep(1)
+```
     转自：http://www.cnblogs.com/yuanchenqi/articles/6755717.html#3881625
 # multiprocessing 模块（实现并行）
    由于GIL的存在，python并不能实现真正意义上的多线程，要想充分利用多核CPU资源，可以通过多开进行的方法。
    multiprocessing包是Python中的多进程管理包。与threading.Thread类似。
 
 ## Process类调用
-        ```python
-		from multiprocessing import Process
-        import time
-        def f(name):
+```python
+from multiprocessing import Process
+import time
+def f(name):
 
-            print('hello', name,time.ctime())
-            time.sleep(1)
+print('hello', name,time.ctime())
+time.sleep(1)
 
-        if __name__ == '__main__':
-            p_list=[]
-            for i in range(3):
-                p = Process(target=f, args=('alvin:%s'%i,))
-                p_list.append(p)
-                p.start()
-            for i in p_list:
-                p.join()
-            print('end')
+if __name__ == '__main__':
+p_list=[]
+for i in range(3):
+p = Process(target=f, args=('alvin:%s'%i,))
+p_list.append(p)
+p.start()
+for i in p_list:
+p.join()
+print('end')
 
-        # 继承Process类调用
-        from multiprocessing import Process
-        import time
+# 继承Process类调用
+from multiprocessing import Process
+import time
 
-        class MyProcess(Process):
-            def __init__(self):
-                super(MyProcess, self).__init__()
-                # self.name = name
+class MyProcess(Process):
+def __init__(self):
+super(MyProcess, self).__init__()
+# self.name = name
 
-            def run(self):
+def run(self):
 
-                print ('hello', self.name,time.ctime())
-                time.sleep(1)
+print ('hello', self.name,time.ctime())
+time.sleep(1)
 
 
-        if __name__ == '__main__':
-            p_list=[]
-            for i in range(3):
-                p = MyProcess()
-                p.start()
-                p_list.append(p)
+if __name__ == '__main__':
+p_list=[]
+for i in range(3):
+p = MyProcess()
+p.start()
+p_list.append(p)
 
-            for p in p_list:
-                p.join()
+for p in p_list:
+p.join()
 
-            print('end')
-		```
+print('end')
+```
    ## process类
         构造方法：
 
@@ -240,31 +240,33 @@
 特点：由于是单线程，不能再切换；不再有任何锁的概念.
 下面这个例子只是能模拟实现并发，并不能监听程序中的IO操作
 需要借助greenlet库实现，但实现的功能并不多。还有gevent模块。
-    from gevent import monkey
-    monkey.patch_all()
-    import gevent
-    from urllib import request
-    import time
+```python
+from gevent import monkey
+monkey.patch_all()
+import gevent
+from urllib import request
+import time
 
-    def f(url):
-        print('GET: %s' % url)
-        resp = request.urlopen(url)
-        data = resp.read()
-        print('%d bytes received from %s.' % (len(data), url))
+def f(url):
+print('GET: %s' % url)
+resp = request.urlopen(url)
+data = resp.read()
+print('%d bytes received from %s.' % (len(data), url))
 
-    start=time.time()
+start=time.time()
 
-    gevent.joinall([
-            gevent.spawn(f, 'https://itk.org/'),
-            gevent.spawn(f, 'https://www.github.com/'),
-            gevent.spawn(f, 'https://zhihu.com/'),
-    ])
+gevent.joinall([
+    gevent.spawn(f, 'https://itk.org/'),
+    gevent.spawn(f, 'https://www.github.com/'),
+    gevent.spawn(f, 'https://zhihu.com/'),
+])
 
-    # f('https://itk.org/')
-    # f('https://www.github.com/')
-    # f('https://zhihu.com/')
+# f('https://itk.org/')
+# f('https://www.github.com/')
+# f('https://zhihu.com/')
 
-    print(time.time()-start)
+print(time.time()-start)
+```
     
     总结：学好C的ＭＰＩ是关键！！！
 
@@ -289,74 +291,78 @@
               通话结束，然后接收到下一个client的数据，这样实现并发。
 
 ### server 端代码
-	      import socket
-	      import select
+```python
+import socket
+import select
 
-	      ip_port = ('192.168.1.127',8080)
-	      sock = socket.socket()
-	      sock.bind(ip_port)
-	      sock.listen(5)
-	      sock.setblocking(False)
-	      socks = [sock,]　　　　　　　＃初始化监听列表
-	      while True:
-		  r,w,e = select.select(socks,[],[],)　　＃开始监听
-		  print('r:',r)
-		  for obj in r:
-		      if obj == sock:　　　＃如果是有新的client连接进来，server端的套接字对象会变化
-			conn,addr = obj.accept()
-			  socks.append(conn) #将新连接进来的client套接字放到监听列表
-		      else:   #如果有消息发动过来，对应的那个client的套接字对象会变化，开始通信
-			  data = obj.recv(1024)
-			  if not data:break
-			  print("---recvData:%s"%data.decode('utf-8'))
-			  send_data = input('>>>:').strip()
-			  obj.send(send_data.encode('utf-8'))
-			  
+ip_port = ('192.168.1.127',8080)
+sock = socket.socket()
+sock.bind(ip_port)
+sock.listen(5)
+sock.setblocking(False)
+socks = [sock,]　　　　　　　＃初始化监听列表
+while True:
+  r,w,e = select.select(socks,[],[],)　　＃开始监听
+  print('r:',r)
+  for obj in r:
+      if obj == sock:　　　＃如果是有新的client连接进来，server端的套接字对象会变化
+	conn,addr = obj.accept()
+	  socks.append(conn) #将新连接进来的client套接字放到监听列表
+      else:   #如果有消息发动过来，对应的那个client的套接字对象会变化，开始通信
+	  data = obj.recv(1024)
+	  if not data:break
+	  print("---recvData:%s"%data.decode('utf-8'))
+	  send_data = input('>>>:').strip()
+	  obj.send(send_data.encode('utf-8'))
+```
 			  
 ### 客户端代码（可以开多个，最多五个）
-    import socket
+```python
+import socket
 
-    ip_port = ('192.168.1.127',8080)
-    sock = socket.socket()
-    sock.connect(ip_port)
+ip_port = ('192.168.1.127',8080)
+sock = socket.socket()
+sock.connect(ip_port)
 
-    while True:
-        data = input('>>>:').strip()
-        sock.send(data.encode('utf-8'))
-        recv_data = sock.recv(1024)
-        if not data:break
-        print(recv_data.decode('utf-8'))
-    sock.close()
+while True:
+data = input('>>>:').strip()
+sock.send(data.encode('utf-8'))
+recv_data = sock.recv(1024)
+if not data:break
+print(recv_data.decode('utf-8'))
+sock.close()
+```
 ### 以上代码存在的问题
   当开了多个客户端的时候，其中有一个client关闭，server端就会报错，是因为在windows系统能下需要捕捉异常，
   在捕捉到异常之后，就把这个已经关闭的client的socket对象在监听列表中删除。
   在linux则认为发了一个空信号过来，因此需要加一个是否为空的判断。所以在server端的代码改成：
-    import socket
-    import select
+```python
+import socket
+import select
 
-    ip_port = ('192.168.1.127',8080)
-    sock = socket.socket()
-    sock.bind(ip_port)
-    sock.listen(5)
-    sock.setblocking(False)
-    socks = [sock,]
-    while True:
-        r,w,e = select.select(socks,[],[],)
-        print('r:',r)
-        for obj in r:
-            if obj == sock:
-                conn,addr = obj.accept()
-                socks.append(conn)
-            else:
-                try:
-                    data = obj.recv(1024)
-                    print("---recvData:%s"%data.decode('utf-8'))
-                    send_data = input('>>>:').strip()
-                    obj.send(send_data.encode('utf-8'))
-                except Exception:
-                    socks.remove(obj)
-            # 在linux下用if not data：continue来处理
-
+ip_port = ('192.168.1.127',8080)
+sock = socket.socket()
+sock.bind(ip_port)
+sock.listen(5)
+sock.setblocking(False)
+socks = [sock,]
+while True:
+r,w,e = select.select(socks,[],[],)
+print('r:',r)
+for obj in r:
+    if obj == sock:
+	conn,addr = obj.accept()
+	socks.append(conn)
+    else:
+	try:
+	    data = obj.recv(1024)
+	    print("---recvData:%s"%data.decode('utf-8'))
+	    send_data = input('>>>:').strip()
+	    obj.send(send_data.encode('utf-8'))
+	except Exception:
+	    socks.remove(obj)
+    # 在linux下用if not data：continue来处理
+```
 ## 异步IO
     特点：全程无阻塞
 # 总结
@@ -410,44 +416,45 @@
   --会根据平台自动选择IO多路复用的机制，在window下面就是select，在linux就是epoll。
 
   代码展示怎么用selector模块，其中client端不变！！！
-  server端代码：
-    import selectors
-    import socket
+##server端代码：
+```python
+import selectors
+import socket
 
-    ip_port = ('192.168.1.127',8800)
-    sock = socket.socket()
-    sock.bind(ip_port)
-    sock.listen(5)
+ip_port = ('192.168.1.127',8800)
+sock = socket.socket()
+sock.bind(ip_port)
+sock.listen(5)
 
-    sock.setblocking(False)
+sock.setblocking(False)
 
-    sel = selectors.DefaultSelector()   #根据平台选择最佳的IO多路复用机制，例如在linux选择epoll
+sel = selectors.DefaultSelector()   #根据平台选择最佳的IO多路复用机制，例如在linux选择epoll
 
-    def read(conn,mask):
-        try:
-            data = conn.recv(1024)
-            print('recvData:',data.decode('utf-8'))
-            send_data = input('>>>:').strip()
-            conn.send(send_data.encode('utf-8'))
-        except Exception:
-            sel.unregister(conn)
+def read(conn,mask):
+try:
+    data = conn.recv(1024)
+    print('recvData:',data.decode('utf-8'))
+    send_data = input('>>>:').strip()
+    conn.send(send_data.encode('utf-8'))
+except Exception:
+    sel.unregister(conn)
 
-    def accept(sock,mask):
-        conn,addr = sock.accept()
-        print("---conn:",conn)
-        sel.register(conn,selectors.EVENT_READ,read)  # 注册事件
+def accept(sock,mask):
+conn,addr = sock.accept()
+print("---conn:",conn)
+sel.register(conn,selectors.EVENT_READ,read)  # 注册事件
 
-    sel.register(sock,selectors.EVENT_READ,accept)   # 注册事件
+sel.register(sock,selectors.EVENT_READ,accept)   # 注册事件
 
 
-    print('waiting....')
-    while True:
-        events = sel.select()
-        for key,mask in events:
-            func = key.data    #accept、read函数
-            obj = key.fileobj  #conn
-            func(obj,mask)
-
+print('waiting....')
+while True:
+events = sel.select()
+for key,mask in events:
+    func = key.data    #accept、read函数
+    obj = key.fileobj  #conn
+    func(obj,mask)
+```
 
 
 
