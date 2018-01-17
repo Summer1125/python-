@@ -279,28 +279,30 @@
               通话结束，然后接收到下一个client的数据，这样实现并发。
 
 ### server 端代码
-      import socket
-      import select
+	      import socket
+	      import select
 
-      ip_port = ('192.168.1.127',8080)
-      sock = socket.socket()
-      sock.bind(ip_port)
-      sock.listen(5)
-      sock.setblocking(False)
-      socks = [sock,]　　　　　　　＃初始化监听列表
-      while True:
-          r,w,e = select.select(socks,[],[],)　　＃开始监听
-          print('r:',r)
-          for obj in r:
-              if obj == sock:　　　＃如果是有新的client连接进来，server端的套接字对象会变化
-              　　conn,addr = obj.accept()
-                  socks.append(conn) #将新连接进来的client套接字放到监听列表
-              else:   #如果有消息发动过来，对应的那个client的套接字对象会变化，开始通信
-                  data = obj.recv(1024)
-                  if not data:break
-                  print("---recvData:%s"%data.decode('utf-8'))
-                  send_data = input('>>>:').strip()
-                  obj.send(send_data.encode('utf-8'))
+	      ip_port = ('192.168.1.127',8080)
+	      sock = socket.socket()
+	      sock.bind(ip_port)
+	      sock.listen(5)
+	      sock.setblocking(False)
+	      socks = [sock,]　　　　　　　＃初始化监听列表
+	      while True:
+		  r,w,e = select.select(socks,[],[],)　　＃开始监听
+		  print('r:',r)
+		  for obj in r:
+		      if obj == sock:　　　＃如果是有新的client连接进来，server端的套接字对象会变化
+			conn,addr = obj.accept()
+			  socks.append(conn) #将新连接进来的client套接字放到监听列表
+		      else:   #如果有消息发动过来，对应的那个client的套接字对象会变化，开始通信
+			  data = obj.recv(1024)
+			  if not data:break
+			  print("---recvData:%s"%data.decode('utf-8'))
+			  send_data = input('>>>:').strip()
+			  obj.send(send_data.encode('utf-8'))
+			  
+			  
 ### 客户端代码（可以开多个，最多五个）
     import socket
 
