@@ -19,6 +19,7 @@
     t.setDaemon(True):线程对象t是主线程的协程，主线程执行完了，t即使没有执行完也结束。
 
 ## 例子：
+    '''python
     import threading
     import time
     def music():
@@ -44,6 +45,7 @@
         #t1.join()
 
     print('end main process')
+    '''
 # RLock()的使用
     在python多线程中，会存在线程A还没操作完一个变量，线程B就开始的情况。属于多个线程同时操作一段内存，
     这时候需要给进行操作的代码段加上锁（同步锁），来防止一段内存被多个线程调用。同步锁的使用是在threading
