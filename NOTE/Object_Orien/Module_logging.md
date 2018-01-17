@@ -76,21 +76,21 @@ logging.critical("critical message")
     %(message)s：用户输出的消息
 ## 以logging.getLogger()对象的方式来设置日志
 ```python
-logger = logging.getLogger()-----------------------产生日志对象
-fh = logging.FileHandler("log.log")----------------产生文件输出对象
-sh = logging.StreamHandler()-----------------------产生终端输出对象
+logger = logging.getLogger()              #-----------------------产生日志对象
+fh = logging.FileHandler("log.log")       #----------------产生文件输出对象
+sh = logging.StreamHandler()              #-----------------------产生终端输出对象
 
-logger.setLevel(logging.DEBUG)---------------------设置日志等级
+logger.setLevel(logging.DEBUG)            #---------------------设置日志等级
 formate = logging.Formatter("%(asctime)s  %(message)s",
-                            datefmt = "%Y-%m-%d",)---设置日志显示格式
-logger.addHandler(fh)--------------------------------将文件输出绑定到日志上，也就是说要指定把日志输出到文件了
-logger.addHandler(sh)---------------------------------将文件输出绑定到终端上，也就是说要指定把日志打印在屏幕了
+                            datefmt = "%Y-%m-%d",)         #---设置日志显示格式
+logger.addHandler(fh)                     #--------------------将文件输出绑定到日志上，也就是说要指定把日志输出到文件了
+logger.addHandler(sh)                     #----------------------将文件输出绑定到终端上，也就是说要指定把日志打印在屏幕了
 
-fh.setFormatter(formate)-----------------------------将日志的格式给文件
-sh.setFormatter(formate)-----------------------------将日志的格式给屏幕
-sh.setLevel(10)--------------------------------------设置屏幕输出的等级
+fh.setFormatter(formate)                  #---------------------将日志的格式给文件
+sh.setFormatter(formate)                  #------------------------将日志的格式给屏幕
+sh.setLevel(10)                           #------------------------------设置屏幕输出的等级
 
-logger.info("info.....")-----------------------------开始输出日志
+logger.info("info.....")                  #-----------------------开始输出日志
 ```
     以上格式基本固定，一般是把上面做个一个函数的形式，返回对象，这时候调用函数就行了。如下：
 ```python
