@@ -19,7 +19,7 @@
 g1 = Geren()
 print(g1.camp)
 g2 = Geren()
-```python
+```
   * 引用名字：对象名.变量名
   * 引用绑定方法：对象名.绑定方法
 ## 可以对类和对象的变量进行增删改查！！！
@@ -197,7 +197,7 @@ class A:
         #propert（查询）
         #name.setter（赋值）
         #name.deleter（删除）
-
+```python
     import math
     class Circle:
         def __init__(self,radius):
@@ -216,22 +216,22 @@ class A:
     print(c.perimeter)
 
 
-   	class People:
+   class People:
 	def __init__(self,name):
-	self.name= name
-	@property
-	def name(self):
-	return self.__Name
+		self.name= name
+		@property
+		def name(self):
+		return self.__Name
 
 	@name.setter
 	def name(self,value):
-	if not isinstance(value,str):
-		raise TypeError("名字必须是字符串")
-	self.__Name = value
+		if not isinstance(value,str):
+			raise TypeError("名字必须是字符串")
+		self.__Name = value
 
 	@name.deleter
 	def name(self):
-	del self.__Name
+		del self.__Name
 
 	p = People('swefegf')
 	print(p.name)
@@ -241,6 +241,7 @@ class A:
 
 	del p.name
 	# print(p.name)
+```
 ## staticmethod
     类的工具包
     但凡是定义在类的内部，并且没有被任何装饰器修饰过的方法，都是绑定方法，有自动传值功能。
@@ -251,7 +252,8 @@ class A:
     把一个方法绑定给类，类.绑定到类的方法()，会把类本身当作第一个参数自动传给绑定方法
 ## __str__
     定义在类内部，必须返回一个字符串类型；打印由这个类产生的对象时，会触发执行。
-    class People:
+```python
+class People:
     def __init__(self,name,age):
         self.name = name
         self.age = age
@@ -261,7 +263,7 @@ class A:
 
     p = People('egg',19)
     print(p)
-
+```
 
 ## 关于staticmethod和classmethod,当不用这两个装饰器的时候，类里面的函数是自动绑定给对象的，也就是说会把对象自动传给函数的第一个参数self，若加上@staticmethod，这个函数就不绑定了，类和对象都能用，当作普通函数来用。加上@classmethod，就会把这个函数自动绑定给类，也就是会把对象自动传给函数的第一个参数cls,这时候即使对象在调用这个函数，传进去的也是对象的类。
 # property，就是搞接口用的
@@ -270,9 +272,9 @@ class A:
 	* func_deletter则是删除。
 ## 反射
     通过字符串的形式操作对象的属性。
-    ### hasattr(object,name),返回True或False
+   ### hasattr(object,name),返回True或False
         print(hasattr(p,'name')) <=======相同=======>print('name' in p.__dict__)
-    ### getattr()
+   ### getattr()
         print(getattr(p,'country')) <=====相同=========>print(p.country)
 
         f = getattr(p,'test')
@@ -283,12 +285,13 @@ class A:
             if hasattr(p,'test'):
                 f = getattr(p,'test')
                 f()
-    ### setattr()
+   ### setattr()
         setattr(p,'age',12)<=====相同=========>p.age=12
         print(p.age,p.__dict__)
-    ### delattr()
+   ### delattr()
         delattr(p,'name')<=====相同=========>del p.name
-    ### 反射当前模块的属性
+   ### 反射当前模块的属性
+```python
         import sys
         def s1():
             print('s1')
@@ -301,16 +304,20 @@ class A:
         print(getattr(this_module,'s2'))#返回一个函数地址，加括号就能运行,与this_module.s1一样，this_module.s1()就可以直接运行
         f = getattr(this_module,'s2')
 	f()
+```
 ## 反射的应用
 ## 反射实现可插拔机制
-    客户端代码(Client.py)：
-    class FtpClient:
+   ### 客户端代码(Client.py)：
+```python
+class FtpClient:
     def __init__(self,addr):
         print("connecting......")
         self.addr = addr
     def put(self):
         print('putting....')
-    服务端：
+```
+   ### 服务端：
+ ```python
     import Client
     obj = Client.FtpClient('192.168.1.111')
     print(obj.addr)
@@ -319,12 +326,16 @@ class A:
         f()
     else:
         print('还未实现')
+```
 ## attr系列
-    __setattr__()
+```python
+   __setattr__()
     __delattr__()
     __getatte__()
+```
 ## 定制自己的数据类型		
-	### 基于继承的原理进行类型加工
+### 基于继承的原理进行类型加工
+```python
 	class LIST(list):
 		def append(self,object):
 			if not isinstance(object,int):
@@ -340,7 +351,9 @@ class A:
 
 	l.insert(0,5)
 	print(l)
-	###授权方式实现定制自己的数据类型
+```
+### 授权方式实现定制自己的数据类型
+```python
 	import time
 	class OPEN:
 		def __init__(self,filepath,mode='r',encode='utf-8'):
@@ -366,11 +379,13 @@ class A:
 	print(fr.read())
 	fr.seek(0)
 	print('---->'+fr.read())
+```
 ## 通过字符串倒入模块
 	import importlib
 	t = importlib.import_module('time')
 	print(t.time())
 ## 定制自己的数据类型:'__getattr__()'在什么时候用到？？？
+```python
     import time
     class LIST:
         def __init__(self,x):
@@ -393,7 +408,9 @@ class A:
     print(ll.mid)
     ll.insert(0,2242354)
     print(ll)
+```
 ## item 系列---->把对象操作属性模拟成字典的形式
+```python
     class Foo:
         def __init__(self,name):
             self.name = name
@@ -413,7 +430,9 @@ class A:
     print(n)
     del f['age'] #调用delitem
     print(f.__dict__)
+```
 ## __slots__()方法：当类中定义了它以后，类所生成的对象的属性只能是slot中包含的，不能识别的，而且对象也不生成自己的__dict__
+```python
 	class Foo:
 	    __slots__ = ['x','y','z']
 
@@ -424,7 +443,9 @@ class A:
 	print(f.x,f.y,f.z)
 	# f.m = 4#会报错
 	print(Foo.__dict__)
+```
 ## __next__和__iter__实现迭代器协议
+```python
 	class Foo:
 	    def __init__(self,start):
 		self.start = start
@@ -440,6 +461,7 @@ class A:
 	f = Foo(0)#f下面有__iter__和__next__方法
 	for i in f:
 	    print(i)
+```
 ## __module__:当前操作的对象在哪个模块
 ## __class__：表示当前操作的对象的类是什么
 ## __del__()
@@ -447,6 +469,7 @@ class A:
 ## 上下文管理协议，即with语句，为了让一个对象兼容with语句，必须在这个对象的类中声明__enter__()和__exit__()方法。
     ### __enter__()
     ### __exit__()
+```python
     import time
     class Open:
         def __init__(self,pathfile,mode='r',code='utf-8'):
@@ -471,10 +494,12 @@ class A:
     # print('=========')
     with Open('a.txt') as f:
         print('.....with .. as ..')
+```
     用途或者说好处：
     1.使用with语句的目的就是把代码块放入with中执行，with结束后，自动完成清理工作，无须手动干预
     2.在需要管理一些资源比如文件，网络连接和锁的编程环境中，可以在__exit__中定制自动释放资源的机制，你无须再去关系这个问题，这将大有用处
 ## __call__() 方法：对象后面加括号，触发执行。
+```python
     class Foo:
         def __init__(self):
             pass
@@ -482,8 +507,10 @@ class A:
             print('__call__')
     obj = Foo()#执行__init__
     obj()#对象加括号就能运行，执行__call__
+ ```
 ## 元类：就是类的类，可以用它来控制类的行为.
     http://www.cnblogs.com/linhaifeng/articles/6204014.html#_label13
+```python
     class Mymeta(type):
         def __init__(self,class_name,class_bases,class_dic):
             for key in class_dic:
@@ -497,3 +524,4 @@ class A:
             print('running')
     Foo = Mymeta("Foo",(object,),{'x':1,'run':'run'})
     print(Foo.__dict__)
+```
