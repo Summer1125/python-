@@ -16,9 +16,9 @@
   * 引用类的函数： Garen.attack(1321414)    需要传一个参数进去
 ## 使用一个对象：
 ```python
-  g1 = Geren()
-  print(g1.camp)
-  g2 = Geren()
+g1 = Geren()
+print(g1.camp)
+g2 = Geren()
 ```python
   * 引用名字：对象名.变量名
   * 引用绑定方法：对象名.绑定方法
@@ -39,34 +39,34 @@
 
 ## 继承和派生
 ```python
-	class A:pass
-	class B:pass
-	class C(A):pass
-	class D(A,B):pass
+class A:pass
+class B:pass
+class C(A):pass
+class D(A,B):pass
 ```
 	-- 查看继承：print(D.__bases__)
 ```python	
-	class Hero:
-		def __init__(self,nickname,life_value):
-			self.nickname = nickname
-			self.life_value	= life_value
-		def attack(self,enemy):
-			print("attack from Hero")
-	class Garen(Hero):
-		def __init__(self,nickname,life_value,script):
-			Hero.__init__(self,nickname,life_value)
-			self.script = script
-		def attack(self,enemy):
-			Hero.attack	(self,enemy)
-			print('attack from garen')
-		camp = "ggggg"
-	class Riven(Hero):
-		camp = 'rrrrr'
+class Hero:
+	def __init__(self,nickname,life_value):
+		self.nickname = nickname
+		self.life_value	= life_value
+	def attack(self,enemy):
+		print("attack from Hero")
+class Garen(Hero):
+	def __init__(self,nickname,life_value,script):
+		Hero.__init__(self,nickname,life_value)
+		self.script = script
+	def attack(self,enemy):
+		Hero.attack	(self,enemy)
+		print('attack from garen')
+	camp = "ggggg"
+class Riven(Hero):
+	camp = 'rrrrr'
 
-	g = Garen('garen',20,'hello world')
-	r = Riven('riven',30)
-	print(g.attack(r))
-	print(g.script)
+g = Garen('garen',20,'hello world')
+r = Riven('riven',30)
+print(g.attack(r))
+print(g.script)
 ```
 ## 组合
 	* 对比继承来说也是用来减少代码重用的，组合描述的是一种‘有’的关系。
@@ -85,13 +85,13 @@ class Course:
 		def __init__(self,name,course):
 			self.name=name
 			self.course=course
-	python=Course("python",100,'3m')
-	t = Teacher('egg',python)
-	s = Student('Ale',python)
+python=Course("python",100,'3m')
+t = Teacher('egg',python)
+s = Student('Ale',python)
 
-	print(s.course.name)
-	print(t.course.period)
-	print(t.course.price)
+print(s.course.name)
+print(t.course.period)
+print(t.course.price)
 ```
 ## 接口与归一化设计
 	python中没有接口，用继承的关系来解决，有接口是为了让使用者有统一的用法
@@ -128,9 +128,7 @@ import abc
 			super().__init__(name,age)
 		def speak(self,x):
 			super().speak()
-			print('x')			
-	
-	
+			print('x')				
 ```
 ## 多态与多态性
 	* 多态是同一种事物的多种形态。
