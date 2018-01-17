@@ -5,9 +5,9 @@ def func():
 	函数体
 	return
 ```
-   用 func._doc_命令来查看函数的描述信息
-   定义空函数：
-'''python
+用 func._doc_命令来查看函数的描述信息
+###定义空函数：
+```python
 def func():
 	pass
 ```
