@@ -1,12 +1,16 @@
 # 定义函数
-	def func():
-		‘函数的描述信息’
-		函数体
-		return
+'''python
+def func():
+	‘函数的描述信息’
+	函数体
+	return
+```
    用 func._doc_命令来查看函数的描述信息
    定义空函数：
-		def func():
-			pass
+'''python
+def func():
+	pass
+```
  空函数的目的用来设计框架，定义空函数非常有用！！！
 # 函数的调用
  	无参函数的调用
@@ -35,9 +39,11 @@
 -	无参数装饰器
 - 	有参装饰器
 - 	装饰器的语法
-		@func(*args,**kwargs)   ###index = func(index)
-		def index():
-			pass
+```python
+@func(*args,**kwargs)   ###index = func(index)
+def index():
+	pass
+```
 - 	装饰器的实现方式：闭包函数
 		def timmer(func):
 			def wrapper(*args,**kwargs):
