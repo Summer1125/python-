@@ -404,6 +404,7 @@ for obj in r:
 	  1、第一个函数：创建epoll句柄：将所有的fd(文件描述符)拷贝到内核空间，但是只拷贝一次。
 	  2、回调函数：某一个函数或者某一个动作成功完成之后就会自动触发的函数。
 	     为所有的fd绑定一个回调函数，一旦有数据访问则触发该回调函数，回调函数将fd放到链表中；
+	  3、检查链表是否为空
 
 
 	  对比select和epoll：
@@ -454,6 +455,127 @@ for key,mask in events:
     obj = key.fileobj  #conn
     func(obj,mask)
 ```
+# 队列 queue，   是一种数据类型
+* 队列有三种模式：
+  `先进先出（FIFO）`，`先进后出(LIFO)`，`设置优先级`<br>
+  最常用的：先进先出模式！！！<br>
+* 实现模块： import queue
+## 优点：线程是安全的，不会出现互斥锁和死锁的情况
+## 创建一个队列对象
+```python
+q = queue.Queue(maxsize = 10)      #默认是FIFO模式
+```
+## 往队列里面放值
+```python
+q.put(111)
+q.put('hello')
+q.put(222)
+```
+## 将一个值在队列中取出
+```python
+a = q.get()
+b = q.get()
+print(a,b)
+```
+### 注意：
+    * 调用put()方法在队列的尾部插入一个值，put()有两个参数，第一个是必须填的插入的值，
+    第二个block默认是True，当队列满了的时候就阻塞住不报错，直到有地方拿走了值空出来，
+    才会继续执行。当设置`q.put(111,block=False)`的时候，这时候满了的状态下插入值就会报错full。
 
+    * get()方法也是一样，默认block=True，里面是空的时候，如果取值了就阻塞住直到有值。
+    `q.get(block=False)`,如果这时候队列里没有值，就报empty的错。
+### 三种队列的生成方式：
+    FIFO:q = queue.Queue(10)
+    LIFO:q = queue.LifoQueue(10)
+    pq = queue.PriorityQueue(10)
+## 常用的方法：
+```python
+q.qsize()    #返回队列的大小
+
+q.empty()    #队列为空，返回True
+
+q.full()     #队列满了，返回True
+q.join()/q.task_done()     #两个搭配使用，q.jion()监视所有item并阻塞主线程，直到所有item都调
+                            用了task_done之后主线程才继续向下执行。这么做的好处在于，假如一个
+                            线程开始处理最后一个任务，它从任务队列中拿走最后一个任务，此时任务
+                            队列就空了但最后那个线程还没处理完。当调用了join之后，主线程就不会
+                            因为队列空了而擅自结束，而是等待最后那个线程处理完成了。
+                            q.task_done() 从场景上来说，处理完一个get出来的item之后，调用task_done
+                            将向队列发出一个信号，表示本任务已经完成.     
+```
+## q.join()和q.task_done()代码实例：
+```python
+import queue
+
+
+q=queue.Queue(5)
+
+q.put(111)
+q.put(222)
+q.put(22222)
+
+while not q.empty():
+  a=q.get()
+  print(a)
+q.task_done()
+
+b=q.get()
+print(b)
+q.task_done()
+
+q.join()
+
+print("ending")
+```
+## 补充：优先级模式的使用
+```python
+
+q=queue.PriorityQueue()
+
+q.put([4,"hello4"])
+q.put([1,"hello"])
+q.put([2,"hello2"])
+
+print(q.get())
+print(q.get())
+```
+# 生产者消费者模型
+```python
+import time,random
+import queue,threading
+
+q = queue.Queue()
+def Producer(name):
+    count = 0 
+    while count < 10:
+        print("making.......")
+        time.sleep(random.randrange(3))
+        q.put(count)
+        print("producer %s  has produced %s "%(name,count))
+
+        count += 1
+
+        print('ok....')
+def Consumer(name):
+    count = 0
+    while count < 10:
+        time.sleep(random.randrange(4))
+        if not q.empty():
+            data = q.get()
+            #q.task_done()
+            #q.join()
+            print(data)
+            print("\033[32;1mConsumer %s has eat %s"%(name,data))
+        else:
+            print("------no  data anymore")
+        count += 1
+
+p1 = threading.Thread(target=Producer,args=('A',))
+c1 = threading.Thread(target=Consumer,args=('B',))
+
+p1.start()
+c1.start()
+
+```
 
 
