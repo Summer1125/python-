@@ -5,7 +5,8 @@
   2，能根据ip和端口找到唯一的应用程序
   
 # 简单socket套接字收发程序，实现在客户端输入小写，返回大写的功能，以打电话为例解释这一过程
- ## 服务端  server.py
+## 服务端  server.py
+```python 
     import socket
     phone=socket.socket(socket.AF_INET,socket.SOCK_STREAM)           #买手机
     phone.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)        #就是它，在bind前加，解决端口占用的报错
@@ -33,8 +34,9 @@
         conn.close()
 
     phone.close()
-
+```
 ## 客户端
+```python
     import socket
     phone=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     phone.connect(('127.0.0.1',8080))
@@ -49,10 +51,11 @@
         print(data)
 
     phone.close()
+```
 # 粘包问题
 ## 解决粘包问题
 ### 服务端代码：
-  
+```python
     import socket,struct,json
     import subprocess
     server=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -90,8 +93,9 @@
 
         conn.close()
     server.close()
-    
-   ### 客户端代码
+```
+### 客户端代码
+```python
     #coding:utf-8
     import socket
     import json
@@ -127,6 +131,7 @@
         print(recv_data.decode('gbk'))
 
     client.close()
+```
 # socketserver 实现并发
     以上代码的socket并不能实现一个服务器，多个客户端之间的通信，需要用socketserver模块来实现并发。
     该模块怎么用的见FTP_upload_download文件中的FTPserver.py和FTPclient.py的服务端和客户端之间的文件上传下载代码。
