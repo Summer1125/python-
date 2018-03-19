@@ -59,7 +59,7 @@
     import socket,struct,json
     import subprocess
     server=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    server.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1) #就是它，在bind前加
+    server.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1) #就是它，在bind前加，重用ip和端口
 
     server.bind(('127.0.0.1',8080))
 
