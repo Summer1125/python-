@@ -1,7 +1,6 @@
 # python_basics
 语法  学习过程中的笔记、练习
 
-# GuessAge.py 
 # three_dict_update.py 
 三级字典练习，以及如何跳出三层循环
 # loggin.py 
