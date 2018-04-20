@@ -116,12 +116,12 @@ print(next(g))
 	
 	******以上为声明式编程********
 # 内置函数
-	*abs()	all()	any()	bin()	bool()	bytes()	 callable()	chr()	ord()<br>
-	*面向对象：classmethod()	staticmethod()	property()	delattr()	hasattr()	getattr()	setattr() issunclass()<br>
-	*虚数：x=1-2i(或x=complex(1-2j))  实部=x.real  虚部=x.imag<br>
-	*数据类型：type()	isinstance()	float()    str()	list()	tuple()	dict()	set()	frozenset()<br>
-	*dir()	divmod()	enumerate()		eval()	exec() 	hash()	help()	hex()	id()	input()	iter()	len()<br>
-	*min()	max()	可以传迭代器进去，也可以传入字典来进行比较 max(dic,key=func)<br>
+	*abs()	all()	any()	bin()	bool()	bytes()	 callable()	chr()	ord()<br>  
+	*面向对象：classmethod()	staticmethod()	property()	delattr()	hasattr()	getattr()	setattr() issunclass()<br>  
+	*虚数：x=1-2i(或x=complex(1-2j))  实部=x.real  虚部=x.imag<br>  
+	*数据类型：type()	isinstance()	float()    str()	list()	tuple()	dict()	set()	frozenset()<br>  
+	*dir()	divmod()	enumerate()		eval()	exec() 	hash()	help()	hex()	id()	input()	iter()	len()<br>  
+	*min()	max()	可以传迭代器进去，也可以传入字典来进行比较 max(dic,key=func)<br>  
 # 匿名函数
 ```python
 f = lambda k:dic[k]
